@@ -440,5 +440,32 @@
             });
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+
+    <script>
+        async function fetchLivePrices() {
+            if(window.supabaseClient) {
+                const { data, error } = await window.supabaseClient.from('rooms_settings').select('*');
+                if(!error && data) {
+                    data.forEach(room => {
+                        // البحث عن العنصر المناسب لكل شقة وتحديث سعره
+                        let priceElement;
+                        if(room.room_type === 'studio') priceElement = document.querySelector('[data-i18n="room_1_price"]');
+                        if(room.room_type === 'one-bedroom') priceElement = document.querySelector('[data-i18n="room_2_price"]');
+                        if(room.room_type === 'family') priceElement = document.querySelector('[data-i18n="room_3_price"]');
+                        
+                        if(priceElement) {
+                            priceElement.textContent = `${room.price_per_night} DZD`;
+                        }
+                    });
+                }
+            }
+        }
+        // تشغيل الدالة بمجرد فتح الصفحة
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(fetchLivePrices, 500); // تأخير بسيط لضمان تحميل الترجمة أولاً
+        });
+    </script>
 </body>
 </html>
