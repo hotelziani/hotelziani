@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب - Résidence Ziani</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sea: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        sand: {
+                            50: '#fdf8f0',
+                            100: '#faf3e0',
+                            200: '#f5e6c8',
+                            300: '#edd9a8',
+                            400: '#e5c987',
+                            500: '#ddb966',
+                            600: '#d4a341',
+                        }
+                    },
+                    fontFamily: {
+                        arabic: ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+        }
+        .input-field {
+            transition: all 0.3s ease;
+        }
+        .input-field:focus {
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+        .password-strength {
+            height: 4px;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .strength-weak { background-color: #ef4444; width: 33%; }
+        .strength-medium { background-color: #f59e0b; width: 66%; }
+        .strength-strong { background-color: #10b981; width: 100%; }
+    </style>
+</head>
+<body class="font-arabic bg-sea-50 min-h-screen py-8 px-4">
+
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-sand-300/20 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-sea-300/20 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="relative w-full max-w-lg mx-auto">
+        <div class="text-center mb-6">
+            <a href="index.html" class="inline-flex items-center gap-3 mb-4">
+                <div class="w-14 h-14 bg-gradient-to-br from-sea-500 to-sea-700 rounded-full flex items-center justify-center shadow-lg">
+                    <i class="fas fa-home text-white text-2xl"></i>
+                </div>
+                <div class="text-right">
+                    <h1 class="text-2xl font-bold text-sea-800">Résidence Ziani</h1>
+                    <p class="text-sm text-sea-600">إقامة زياني</p>
+                </div>
+            </a>
+            <h2 class="text-2xl font-bold text-sea-800">إنشاء حساب جديد</h2>
+            <p class="text-sea-600 mt-2">انضم إلينا واحجز إقامتك المثالية بسهولة</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-2xl p-8">
+            <form id="registerForm" class="space-y-5">
+                <div>
+                    <label for="fullName" class="block text-sm font-medium text-sea-800 mb-2">
+                        <i class="fas fa-user ml-2 text-sea-500"></i>
+                        الاسم الكامل
+                        <span class="text-red-500">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        required
+                        placeholder="مثال: محمد أحمد"
+                        class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800 placeholder-sea-400"
+                    >
+                </div>
+
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-sea-800 mb-2">
+                        <i class="fas fa-phone ml-2 text-sea-500"></i>
+                        رقم الهاتف
+                        <span class="text-red-500">*</span>
+                    </label>
+                    <div class="flex gap-2">
+                        <span class="inline-flex items-center px-4 py-3 bg-sea-100 border border-sea-200 rounded-xl text-sea-700 font-medium">
+                            <img src="https://flagcdn.com/w20/dz.png" alt="Algeria" class="w-5 h-auto ml-2 rounded">
+                            +213
+                        </span>
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            required
+                            placeholder="550 12 34 56"
+                            pattern="[0-9\s]{9,14}"
+                            class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800 placeholder-sea-400"
+                        >
+                    </div>
+                    <p class="text-xs text-sea-500 mt-1">يُرجى إدخال رقم هاتف جزائري صحيح (9 أرقام)</p>
+                </div>
+
+                <div>
+                    <label for="email" class="block text-sm font-medium text-sea-800 mb-2">
+                        <i class="fas fa-envelope ml-2 text-sea-500"></i>
+                        البريد الإلكتروني
+                        <span class="text-red-500">*</span>
+                    </label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        placeholder="example@email.com"
+                        class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800 placeholder-sea-400"
+                    >
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-sea-800 mb-2">
+                        <i class="fas fa-lock ml-2 text-sea-500"></i>
+                        كلمة المرور
+                        <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            required
+                            placeholder="••••••••"
+                            class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800 placeholder-sea-400"
+                        >
+                        <button
+                            type="button"
+                            id="togglePassword"
+                            class="absolute left-3 top-1/2 -translate-y-1/2 text-sea-400 hover:text-sea-600 transition"
+                        >
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="mt-2">
+                        <div class="flex gap-1">
+                            <div id="strength1" class="password-strength flex-1 bg-sea-200"></div>
+                            <div id="strength2" class="password-strength flex-1 bg-sea-200"></div>
+                            <div id="strength3" class="password-strength flex-1 bg-sea-200"></div>
+                        </div>
+                        <p id="strengthText" class="text-xs text-sea-500 mt-1"></p>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="confirmPassword" class="block text-sm font-medium text-sea-800 mb-2">
+                        <i class="fas fa-lock ml-2 text-sea-500"></i>
+                        تأكيد كلمة المرور
+                        <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            required
+                            placeholder="••••••••"
+                            class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800 placeholder-sea-400"
+                        >
+                        <span id="passwordMatch" class="absolute left-3 top-1/2 -translate-y-1/2"></span>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input
+                            type="checkbox"
+                            id="terms"
+                            name="terms"
+                            required
+                            class="w-5 h-5 text-sea-500 border-sea-300 rounded mt-0.5 focus:ring-sea-500"
+                        >
+                        <span class="text-sm text-sea-600">
+                            أوافق على
+                            <a href="#" class="text-sea-500 hover:text-sea-700 font-medium underline">الشروط والأحكام</a>
+                            و
+                            <a href="#" class="text-sea-500 hover:text-sea-700 font-medium underline">سياسة الخصوصية</a>
+                            لـ Résidence Ziani
+                        </span>
+                    </label>
+                </div>
+
+                <button
+                    type="submit"
+                    class="w-full bg-gradient-to-r from-sea-500 to-sea-600 text-white py-3 rounded-xl font-bold text-lg hover:from-sea-600 hover:to-sea-700 transition shadow-lg transform hover:scale-[1.02]"
+                >
+                    <i class="fas fa-user-plus ml-2"></i>
+                    إنشاء حساب
+                </button>
+            </form>
+
+            <div class="relative my-6">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-sea-200"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="px-4 bg-white text-sea-400">أو</span>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <button class="w-full flex items-center justify-center gap-3 px-4 py-3 border-2 border-sea-200 rounded-xl hover:bg-sea-50 transition font-medium text-sea-700">
+                    <i class="fab fa-google text-red-500"></i>
+                    التسجيل عبر Google
+                </button>
+                <button class="w-full flex items-center justify-center gap-3 px-4 py-3 border-2 border-sea-200 rounded-xl hover:bg-sea-50 transition font-medium text-sea-700">
+                    <i class="fab fa-facebook text-blue-600"></i>
+                    التسجيل عبر Facebook
+                </button>
+            </div>
+
+            <p class="text-center mt-6 text-sea-600">
+                لديك حساب بالفعل؟
+                <a href="login.html" class="text-sea-500 hover:text-sea-700 font-bold transition">
+                    تسجيل الدخول
+                </a>
+            </p>
+        </div>
+
+        <div class="text-center mt-6">
+            <a href="index.html" class="text-sea-600 hover:text-sea-800 transition text-sm">
+                <i class="fas fa-arrow-right ml-2"></i>
+                العودة للصفحة الرئيسية
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Password Visibility
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            togglePassword.querySelector('i').classList.toggle('fa-eye');
+            togglePassword.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+
+        // Password Strength Checker
+        const passwordStrength = (password) => {
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/\d/.test(password) || /[^a-zA-Z0-9]/.test(password)) strength++;
+            return strength;
+        };
+
+        passwordInput.addEventListener('input', () => {
+            const password = passwordInput.value;
+            const strength = passwordStrength(password);
+            const strength1 = document.getElementById('strength1');
+            const strength2 = document.getElementById('strength2');
+            const strength3 = document.getElementById('strength3');
+            const strengthText = document.getElementById('strengthText');
+
+            // Reset
+            strength1.className = 'password-strength flex-1 bg-sea-200';
+            strength2.className = 'password-strength flex-1 bg-sea-200';
+            strength3.className = 'password-strength flex-1 bg-sea-200';
+
+            if (password.length === 0) {
+                strengthText.textContent = '';
+                return;
+            }
+
+            if (strength >= 1) {
+                strength1.className = 'password-strength flex-1 strength-weak';
+                strengthText.textContent = 'ضعيفة';
+            }
+            if (strength >= 2) {
+                strength2.className = 'password-strength flex-1 strength-medium';
+                strengthText.textContent = 'متوسطة';
+            }
+            if (strength >= 3) {
+                strength3.className = 'password-strength flex-1 strength-strong';
+                strengthText.textContent = 'قوية';
+            }
+        });
+
+        // Password Match Checker
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const passwordMatch = document.getElementById('passwordMatch');
+
+        confirmPasswordInput.addEventListener('input', () => {
+            if (confirmPasswordInput.value === passwordInput.value && confirmPasswordInput.value.length > 0) {
+                passwordMatch.innerHTML = '<i class="fas fa-check-circle text-green-500 text-xl"></i>';
+            } else if (confirmPasswordInput.value.length > 0) {
+                passwordMatch.innerHTML = '<i class="fas fa-times-circle text-red-500 text-xl"></i>';
+            } else {
+                passwordMatch.innerHTML = '';
+            }
+        });
+
+        // Form Submission (Ready for Supabase)
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const fullName = document.getElementById('fullName').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const terms = document.getElementById('terms').checked;
+
+            // Validation
+            if (password !== confirmPassword) {
+                alert('كلمات المرور غير متطابقة!');
+                return;
+            }
+
+            if (!terms) {
+                alert('يجب الموافقة على الشروط والأحكام!');
+                return;
+            }
+
+            console.log('Register attempt:', { fullName, phone, email });
+
+            // TODO: Connect to Supabase Auth
+            // const { data, error } = await supabase.auth.signUp({
+            //     email,
+            //     password,
+            //     options: {
+            //         data: {
+            //             full_name: fullName,
+            //             phone: phone
+            //         }
+            //     }
+            // });
+
+            alert('سيتم ربط هذا النموذج مع Supabase قريباً!');
+        });
+
+        // Phone input formatting
+        document.getElementById('phone').addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/\D/g, '').replace(/(\d{3})(\d{2})(\d{2})(\d{2})/, '$1 $2 $3 $4');
+        });
+    </script>
+</body>
+</html>

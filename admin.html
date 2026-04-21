@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الإدارة - Résidence Ziani</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sea: {
+                            50: '#f0f9ff', 100: '#e0f2fe', 200: '#bae6fd', 300: '#7dd3fc', 400: '#38bdf8',
+                            500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1', 800: '#075985', 900: '#0c4a6e',
+                        },
+                        sand: {
+                            50: '#fdf8f0', 100: '#faf3e0', 200: '#f5e6c8', 300: '#edd9a8',
+                            400: '#e5c987', 500: '#ddb966', 600: '#d4a341',
+                        }
+                    },
+                    fontFamily: {
+                        arabic: ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Tajawal', sans-serif; background-color: #f3f4f6; }
+        /* Scrollbar styling for tables */
+        ::-webkit-scrollbar { height: 8px; width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="font-arabic text-slate-800">
+
+    <div class="flex h-screen overflow-hidden">
+        
+        <aside id="sidebar" class="bg-sea-900 text-white w-64 flex-shrink-0 hidden md:flex flex-col transition-all duration-300 z-20 shadow-xl">
+            <div class="h-16 flex items-center justify-center border-b border-sea-800 px-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-sand-400 to-sand-600 rounded-full flex items-center justify-center shadow-lg">
+                        <i class="fas fa-home text-white text-sm"></i>
+                    </div>
+                    <span class="text-lg font-bold tracking-wide">Résidence Ziani</span>
+                </div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto py-4">
+                <nav class="space-y-1 px-3">
+                    <a href="#" class="flex items-center gap-3 px-3 py-3 bg-sea-800 text-white rounded-lg transition">
+                        <i class="fas fa-tachometer-alt w-5 text-center text-sand-400"></i>
+                        <span class="font-medium">لوحة القيادة</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-3 py-3 text-sea-200 hover:bg-sea-800 hover:text-white rounded-lg transition">
+                        <i class="fas fa-calendar-check w-5 text-center"></i>
+                        <span class="font-medium">الحجوزات</span>
+                        <span class="ms-auto bg-sand-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">3</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-3 py-3 text-sea-200 hover:bg-sea-800 hover:text-white rounded-lg transition">
+                        <i class="fas fa-door-open w-5 text-center"></i>
+                        <span class="font-medium">إدارة الشقق</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-3 py-3 text-sea-200 hover:bg-sea-800 hover:text-white rounded-lg transition">
+                        <i class="fas fa-users w-5 text-center"></i>
+                        <span class="font-medium">الزبائن</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-3 py-3 text-sea-200 hover:bg-sea-800 hover:text-white rounded-lg transition">
+                        <i class="fas fa-chart-line w-5 text-center"></i>
+                        <span class="font-medium">التقارير المالية</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="p-4 border-t border-sea-800">
+                <a href="#" class="flex items-center gap-3 px-3 py-2 text-sea-200 hover:bg-sea-800 hover:text-white rounded-lg transition">
+                    <i class="fas fa-cog w-5 text-center"></i>
+                    <span class="font-medium">الإعدادات</span>
+                </a>
+                <a href="index.html" class="flex items-center gap-3 px-3 py-2 text-red-400 hover:bg-red-500 hover:text-white rounded-lg transition mt-1">
+                    <i class="fas fa-sign-out-alt w-5 text-center"></i>
+                    <span class="font-medium">تسجيل الخروج</span>
+                </a>
+            </div>
+        </aside>
+
+        <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+            
+            <header class="h-16 bg-white shadow-sm flex items-center justify-between px-4 sm:px-6 z-10">
+                <div class="flex items-center gap-4">
+                    <button id="mobileMenuBtn" class="md:hidden text-sea-700 hover:text-sea-900 transition">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <div class="hidden sm:block relative">
+                        <i class="fas fa-search absolute right-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" placeholder="ابحث عن حجز، زبون..." class="ps-10 pe-4 py-2 bg-slate-100 border-transparent rounded-lg text-sm focus:bg-white focus:border-sea-300 focus:ring-2 focus:ring-sea-100 outline-none transition w-64">
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <button class="relative p-2 text-slate-500 hover:text-sea-600 transition">
+                        <i class="far fa-bell text-xl"></i>
+                        <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 border-2 border-white rounded-full"></span>
+                    </button>
+                    
+                    <div class="flex items-center gap-3 border-s border-slate-200 ps-4">
+                        <div class="hidden sm:block text-left">
+                            <p class="text-sm font-bold text-slate-700">الإدارة</p>
+                            <p class="text-xs text-slate-500">المدير العام</p>
+                        </div>
+                        <div class="w-10 h-10 bg-sea-100 rounded-full flex items-center justify-center text-sea-700 border border-sea-200">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 p-4 sm:p-6">
+                
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-800">مرحباً بك في لوحة الإدارة</h2>
+                        <p class="text-slate-500 text-sm mt-1">إليك ملخص أداء الإقامة لهذا الشهر.</p>
+                    </div>
+                    <button class="bg-gradient-to-r from-sea-500 to-sea-600 text-white px-4 py-2 rounded-lg font-medium hover:from-sea-600 hover:to-sea-700 transition shadow flex items-center gap-2">
+                        <i class="fas fa-plus"></i> إضافة حجز يدوي
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-slate-500 text-sm font-medium">الحجوزات الجديدة</h3>
+                            <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-calendar-plus"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-3xl font-bold text-slate-800">12</span>
+                            <span class="text-sm font-medium text-green-500 flex items-center gap-1">
+                                <i class="fas fa-arrow-up text-xs"></i> 15%
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-1">مقارنة بالشهر الماضي</p>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-slate-500 text-sm font-medium">الإيرادات (هذا الشهر)</h3>
+                            <div class="w-10 h-10 bg-green-50 text-green-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-3xl font-bold text-slate-800" dir="ltr">245,000</span>
+                            <span class="text-sm font-medium text-slate-500">ج.د</span>
+                        </div>
+                        <p class="text-xs text-green-500 mt-1 font-medium flex items-center gap-1">
+                            <i class="fas fa-arrow-up text-xs"></i> +8% نمو
+                        </p>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-slate-500 text-sm font-medium">نسبة الإشغال</h3>
+                            <div class="w-10 h-10 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-bed"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-3xl font-bold text-slate-800">75%</span>
+                        </div>
+                        <div class="w-full bg-slate-100 rounded-full h-1.5 mt-3">
+                            <div class="bg-purple-500 h-1.5 rounded-full" style="width: 75%"></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-slate-500 text-sm font-medium">قيد الانتظار</h3>
+                            <div class="w-10 h-10 bg-orange-50 text-orange-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-hourglass-half"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-3xl font-bold text-orange-500">3</span>
+                            <span class="text-sm font-medium text-slate-500">طلبات</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-1">تحتاج إلى تأكيدك الآن</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+                        <h3 class="font-bold text-slate-800">أحدث الحجوزات</h3>
+                        <a href="#" class="text-sm text-sea-600 hover:text-sea-800 font-medium">عرض الكل <i class="fas fa-chevron-left ms-1 text-xs"></i></a>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full whitespace-nowrap text-right">
+                            <thead class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider">
+                                <tr>
+                                    <th class="px-6 py-3 font-medium">رقم الحجز</th>
+                                    <th class="px-6 py-3 font-medium">الزبون</th>
+                                    <th class="px-6 py-3 font-medium">الشقة</th>
+                                    <th class="px-6 py-3 font-medium">التواريخ</th>
+                                    <th class="px-6 py-3 font-medium">المبلغ الإجمالي</th>
+                                    <th class="px-6 py-3 font-medium">الحالة</th>
+                                    <th class="px-6 py-3 font-medium text-center">إجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 text-sm">
+                                <tr class="hover:bg-slate-50 transition">
+                                    <td class="px-6 py-4 font-medium text-slate-800">#RZ-1045</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-sea-100 text-sea-600 flex items-center justify-center font-bold">
+                                                ع.م
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-slate-800">علي محمود</p>
+                                                <p class="text-xs text-slate-500" dir="ltr">0771 22 33 44</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-slate-600">الشقة العائلية</td>
+                                    <td class="px-6 py-4">
+                                        <p class="text-slate-800">15 أغسطس - 20 أغسطس</p>
+                                        <p class="text-xs text-slate-500">5 ليالي • 4 أفراد</p>
+                                    </td>
+                                    <td class="px-6 py-4 font-bold text-slate-800" dir="ltr">32,500 د.ج</td>
+                                    <td class="px-6 py-4">
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+                                            قيد الانتظار
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center justify-center gap-2">
+                                            <button class="p-1.5 text-green-600 hover:bg-green-50 rounded transition" title="تأكيد الحجز">
+                                                <i class="fas fa-check-circle text-lg"></i>
+                                            </button>
+                                            <button class="p-1.5 text-red-600 hover:bg-red-50 rounded transition" title="إلغاء">
+                                                <i class="fas fa-times-circle text-lg"></i>
+                                            </button>
+                                            <button class="p-1.5 text-sea-600 hover:bg-sea-50 rounded transition" title="التفاصيل">
+                                                <i class="fas fa-eye text-lg"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr class="hover:bg-slate-50 transition">
+                                    <td class="px-6 py-4 font-medium text-slate-800">#RZ-1044</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold">
+                                                س.ك
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-slate-800">سارة كمال</p>
+                                                <p class="text-xs text-slate-500" dir="ltr">0550 99 88 77</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-slate-600">شقة استوديو</td>
+                                    <td class="px-6 py-4">
+                                        <p class="text-slate-800">10 أغسطس - 12 أغسطس</p>
+                                        <p class="text-xs text-slate-500">2 ليالي • 2 أفراد</p>
+                                    </td>
+                                    <td class="px-6 py-4 font-bold text-slate-800" dir="ltr">5,000 د.ج</td>
+                                    <td class="px-6 py-4">
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                            مؤكد
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center justify-center gap-2">
+                                            <button class="p-1.5 text-slate-400 hover:text-sea-600 hover:bg-sea-50 rounded transition" title="التفاصيل">
+                                                <i class="fas fa-eye text-lg"></i>
+                                            </button>
+                                            <button class="p-1.5 text-slate-400 hover:text-sea-600 hover:bg-sea-50 rounded transition" title="مراسلة">
+                                                <i class="fab fa-whatsapp text-lg"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr class="hover:bg-slate-50 transition">
+                                    <td class="px-6 py-4 font-medium text-slate-800">#RZ-1043</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-sand-100 text-sand-600 flex items-center justify-center font-bold">
+                                                ي.ب
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-slate-800">ياسين بلقاسم</p>
+                                                <p class="text-xs text-slate-500" dir="ltr">0661 11 22 33</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-slate-600">شقة غرفة نوم</td>
+                                    <td class="px-6 py-4">
+                                        <p class="text-slate-800">01 أغسطس - 05 أغسطس</p>
+                                        <p class="text-xs text-slate-500">4 ليالي • 3 أفراد</p>
+                                    </td>
+                                    <td class="px-6 py-4 font-bold text-slate-800" dir="ltr">16,000 د.ج</td>
+                                    <td class="px-6 py-4">
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                            مؤكد
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center justify-center gap-2">
+                                            <button class="p-1.5 text-slate-400 hover:text-sea-600 hover:bg-sea-50 rounded transition" title="التفاصيل">
+                                                <i class="fas fa-eye text-lg"></i>
+                                            </button>
+                                            <button class="p-1.5 text-slate-400 hover:text-sea-600 hover:bg-sea-50 rounded transition" title="مراسلة">
+                                                <i class="fab fa-whatsapp text-lg"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <div id="mobileOverlay" class="fixed inset-0 bg-slate-900/50 z-20 hidden backdrop-blur-sm transition-opacity"></div>
+
+    <aside id="mobileSidebar" class="fixed inset-y-0 right-0 w-64 bg-sea-900 text-white z-30 transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
+        <div class="h-16 flex items-center justify-between px-4 border-b border-sea-800">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-gradient-to-br from-sand-400 to-sand-600 rounded-full flex items-center justify-center shadow-lg">
+                    <i class="fas fa-home text-white text-sm"></i>
+                </div>
+                <span class="text-lg font-bold">Résidence Ziani</span>
+            </div>
+            <button id="closeMobileMenuBtn" class="text-sea-200 hover:text-white p-2">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <div class="flex-1 overflow-y-auto py-4">
+            <nav class="space-y-1 px-3">
+                <a href="#" class="flex items-center gap-3 px-3 py-3 bg-sea-800 text-white rounded-lg">
+                    <i class="fas fa-tachometer-alt w-5 text-center text-sand-400"></i>
+                    <span class="font-medium">لوحة القيادة</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 px-3 py-3 text-sea-200 hover:bg-sea-800 hover:text-white rounded-lg">
+                    <i class="fas fa-calendar-check w-5 text-center"></i>
+                    <span class="font-medium">الحجوزات</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 px-3 py-3 text-sea-200 hover:bg-sea-800 hover:text-white rounded-lg">
+                    <i class="fas fa-door-open w-5 text-center"></i>
+                    <span class="font-medium">إدارة الشقق</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 px-3 py-3 text-sea-200 hover:bg-sea-800 hover:text-white rounded-lg">
+                    <i class="fas fa-users w-5 text-center"></i>
+                    <span class="font-medium">الزبائن</span>
+                </a>
+            </nav>
+        </div>
+    </aside>
+
+    <script>
+        // Mobile Sidebar Logic
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMobileMenuBtn = document.getElementById('closeMobileMenuBtn');
+        const mobileSidebar = document.getElementById('mobileSidebar');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+
+        function openSidebar() {
+            mobileOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                mobileSidebar.classList.remove('translate-x-full');
+            }, 10);
+        }
+
+        function closeSidebar() {
+            mobileSidebar.classList.add('translate-x-full');
+            setTimeout(() => {
+                mobileOverlay.classList.add('hidden');
+            }, 300);
+        }
+
+        mobileMenuBtn.addEventListener('click', openSidebar);
+        closeMobileMenuBtn.addEventListener('click', closeSidebar);
+        mobileOverlay.addEventListener('click', closeSidebar);
+
+        // Demo logic for approve/reject buttons
+        document.querySelectorAll('.fa-check-circle').forEach(btn => {
+            btn.parentElement.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('سيتم ربط هذا الزر بـ Supabase لتحويل حالة الحجز إلى "مؤكد" وإرسال تنبيه للزبون.');
+            });
+        });
+    </script>
+</body>
+</html>

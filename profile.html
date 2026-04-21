@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الملف الشخصي - Résidence Ziani</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sea: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        sand: {
+                            50: '#fdf8f0',
+                            100: '#faf3e0',
+                            200: '#f5e6c8',
+                            300: '#edd9a8',
+                            400: '#e5c987',
+                            500: '#ddb966',
+                            600: '#d4a341',
+                        }
+                    },
+                    fontFamily: {
+                        arabic: ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+        }
+        .input-field {
+            transition: all 0.3s ease;
+        }
+        .input-field:focus {
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background: #0ea5e9;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="font-arabic bg-sea-50 min-h-screen">
+
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between py-3">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-sea-500 to-sea-700 rounded-full flex items-center justify-center">
+                        <i class="fas fa-home text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold text-sea-800">Résidence Ziani</h1>
+                        <p class="text-xs text-sea-600">إقامة زياني</p>
+                    </div>
+                </a>
+
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="index.html" class="text-sea-600 hover:text-sea-800 transition font-medium">الرئيسية</a>
+                    <a href="booking.html" class="text-sea-600 hover:text-sea-800 transition font-medium">حجز جديد</a>
+                    <a href="profile.html" class="text-sea-800 font-bold nav-link active">ملفي</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <button id="notificationBtn" class="relative p-2 text-sea-600 hover:text-sea-800 transition">
+                        <i class="fas fa-bell text-xl"></i>
+                        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                    <button id="mobileMenuBtn" class="md:hidden p-2 text-sea-600">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="bg-gradient-to-r from-sea-500 to-sea-600 rounded-2xl p-6 md:p-8 text-white mb-8 shadow-xl">
+            <div class="flex items-center gap-4">
+                <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center">
+                    <i class="fas fa-user text-4xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold">مرحباً، <span id="welcomeName">محمد أحمد</span> 👋</h2>
+                    <p class="text-sea-100">إدارة حسابك وحجوزاتك في مكان واحد</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid lg:grid-cols-4 gap-6">
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-2xl shadow-lg p-4 sticky top-24">
+                    <nav class="space-y-2">
+                        <button onclick="showSection('overview')" id="nav-overview" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sea-700 hover:bg-sea-50 transition active-section bg-sea-50 text-sea-800 font-bold">
+                            <i class="fas fa-home text-sea-500"></i>
+                            نظرة عامة
+                        </button>
+                        <button onclick="showSection('personal')" id="nav-personal" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sea-700 hover:bg-sea-50 transition">
+                            <i class="fas fa-user-edit text-sea-500"></i>
+                            المعلومات الشخصية
+                        </button>
+                        <button onclick="showSection('bookings')" id="nav-bookings" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sea-700 hover:bg-sea-50 transition">
+                            <i class="fas fa-calendar-alt text-sea-500"></i>
+                            حجوزاتي
+                        </button>
+                        <button onclick="showSection('security')" id="nav-security" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sea-700 hover:bg-sea-50 transition">
+                            <i class="fas fa-shield-alt text-sea-500"></i>
+                            الأمان وكلمة المرور
+                        </button>
+                        <button onclick="showSection('notifications')" id="nav-notifications" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sea-700 hover:bg-sea-50 transition">
+                            <i class="fas fa-bell text-sea-500"></i>
+                            الإشعارات
+                        </button>
+                    </nav>
+
+                    <div class="border-t border-sea-200 mt-4 pt-4">
+                        <a href="login.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-50 transition">
+                            <i class="fas fa-sign-out-alt"></i>
+                            تسجيل الخروج
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-3">
+
+                <div id="section-overview" class="profile-section">
+                    <div class="grid md:grid-cols-3 gap-4 mb-6">
+                        <div class="bg-white rounded-2xl shadow-lg p-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 bg-gradient-to-br from-sand-400 to-sand-600 rounded-2xl flex items-center justify-center">
+                                    <i class="fas fa-calendar-check text-white text-2xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sea-500 text-sm">إجمالي الحجوزات</p>
+                                    <p class="text-2xl font-bold text-sea-800">5</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl shadow-lg p-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 bg-gradient-to-br from-sea-400 to-sea-600 rounded-2xl flex items-center justify-center">
+                                    <i class="fas fa-clock text-white text-2xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sea-500 text-sm">الحجوزات النشطة</p>
+                                    <p class="text-2xl font-bold text-sea-800">1</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl shadow-lg p-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center">
+                                    <i class="fas fa-star text-white text-2xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sea-500 text-sm">نقاط الولاء</p>
+                                    <p class="text-2xl font-bold text-sea-800">250</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
+                        <h3 class="text-xl font-bold text-sea-800 mb-4 flex items-center gap-2">
+                            <i class="fas fa-calendar text-sea-500"></i>
+                            الحجز القادم
+                        </h3>
+                        <div class="bg-gradient-to-r from-sea-50 to-sand-50 rounded-xl p-4 border border-sea-200">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-16 h-16 bg-sea-100 rounded-xl flex items-center justify-center">
+                                        <i class="fas fa-door-open text-sea-600 text-2xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-sea-800">الشقة العائلية</h4>
+                                        <p class="text-sea-600 text-sm mt-1">
+                                            <i class="fas fa-calendar ml-1"></i>
+                                            15 أغسطس - 22 أغسطس 2026
+                                        </p>
+                                        <p class="text-sea-600 text-sm">
+                                            <i class="fas fa-users ml-1"></i>
+                                            4 أفراد
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-2xl font-bold text-sand-600">45,500 د.ج</p>
+                                    <span class="inline-block bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full mt-2">
+                                        <i class="fas fa-check-circle ml-1"></i>
+                                        مؤكد
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-sea-800 mb-4">إجراءات سريعة</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <a href="booking.html" class="flex flex-col items-center gap-2 p-4 rounded-xl bg-sea-50 hover:bg-sea-100 transition">
+                                <i class="fas fa-plus-circle text-3xl text-sea-500"></i>
+                                <span class="text-sm font-medium text-sea-700">حجز جديد</span>
+                            </a>
+                            <button class="flex flex-col items-center gap-2 p-4 rounded-xl bg-sea-50 hover:bg-sea-100 transition">
+                                <i class="fas fa-history text-3xl text-sea-500"></i>
+                                <span class="text-sm font-medium text-sea-700">سجل الحجوزات</span>
+                            </button>
+                            <button class="flex flex-col items-center gap-2 p-4 rounded-xl bg-sea-50 hover:bg-sea-100 transition">
+                                <i class="fas fa-receipt text-3xl text-sea-500"></i>
+                                <span class="text-sm font-medium text-sea-700">الفواتير</span>
+                            </button>
+                            <button class="flex flex-col items-center gap-2 p-4 rounded-xl bg-sea-50 hover:bg-sea-100 transition">
+                                <i class="fas fa-headset text-3xl text-sea-500"></i>
+                                <span class="text-sm font-medium text-sea-700">الدعم</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="section-personal" class="profile-section hidden">
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-xl font-bold text-sea-800 flex items-center gap-2">
+                                <i class="fas fa-user-edit text-sea-500"></i>
+                                المعلومات الشخصية
+                            </h3>
+                            <button onclick="toggleEdit('personalForm')" class="text-sea-500 hover:text-sea-700 font-medium">
+                                <i class="fas fa-edit ml-1"></i>
+                                تعديل
+                            </button>
+                        </div>
+
+                        <form id="personalForm" class="space-y-4">
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-sea-700 mb-2">الاسم الكامل</label>
+                                    <input type="text" value="محمد أحمد" class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800" disabled>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-sea-700 mb-2">البريد الإلكتروني</label>
+                                    <input type="email" value="mohamed@example.com" class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800" disabled>
+                                </div>
+                            </div>
+
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-sea-700 mb-2">رقم الهاتف</label>
+                                    <div class="flex">
+                                        <span class="inline-flex items-center px-4 py-3 bg-sea-100 border border-l-0 border-sea-200 rounded-r-xl text-sea-700">+213</span>
+                                        <input type="tel" value="550123456" class="input-field w-full px-4 py-3 border border-sea-200 rounded-l-xl focus:outline-none text-sea-800" disabled>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-sea-700 mb-2">تاريخ الميلاد</label>
+                                    <input type="date" value="1990-05-15" class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800" disabled>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-sea-700 mb-2">العنوان</label>
+                                <input type="text" value="الجزائر العاصمة، الجزائر" class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800" disabled>
+                            </div>
+
+                            <div class="flex gap-4 pt-4">
+                                <button type="submit" class="bg-gradient-to-r from-sea-500 to-sea-600 text-white px-8 py-3 rounded-xl font-bold hover:from-sea-600 hover:to-sea-700 transition">
+                                    <i class="fas fa-save ml-2"></i>
+                                    حفظ التغييرات
+                                </button>
+                                <button type="button" class="border-2 border-sea-200 text-sea-700 px-8 py-3 rounded-xl font-bold hover:bg-sea-50 transition" onclick="toggleEdit('personalForm')">
+                                    إلغاء
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="section-bookings" class="profile-section hidden">
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-sea-800 mb-6 flex items-center gap-2">
+                            <i class="fas fa-calendar-alt text-sea-500"></i>
+                            حجوزاتي
+                        </h3>
+
+                        <div class="flex gap-2 mb-6 border-b border-sea-200 pb-2">
+                            <button class="px-4 py-2 bg-sea-500 text-white rounded-full font-medium text-sm">الكل</button>
+                            <button class="px-4 py-2 text-sea-600 hover:bg-sea-50 rounded-full font-medium text-sm">قادمة</button>
+                            <button class="px-4 py-2 text-sea-600 hover:bg-sea-50 rounded-full font-medium text-sm">سابقة</button>
+                            <button class="px-4 py-2 text-sea-600 hover:bg-sea-50 rounded-full font-medium text-sm">ملغاة</button>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="border-2 border-green-200 bg-green-50 rounded-2xl p-4">
+                                <div class="flex flex-col md:flex-row justify-between gap-4">
+                                    <div class="flex items-start gap-4">
+                                        <div class="w-16 h-16 bg-sea-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-door-open text-sea-600 text-2xl"></i>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <h4 class="font-bold text-sea-800">الشقة العائلية</h4>
+                                                <span class="bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">نشطة</span>
+                                            </div>
+                                            <p class="text-sea-600 text-sm">
+                                                <i class="fas fa-calendar ml-1"></i>
+                                                15 - 22 أغسطس 2026 (7 ليالي)
+                                            </p>
+                                            <p class="text-sea-600 text-sm">
+                                                <i class="fas fa-user ml-1"></i>
+                                                4 أفراد
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="text-left flex flex-col items-end justify-between">
+                                        <p class="text-xl font-bold text-sand-600">45,500 د.ج</p>
+                                        <div class="flex gap-2 mt-2">
+                                            <button class="text-sea-500 hover:text-sea-700 text-sm font-medium">
+                                                <i class="fas fa-eye ml-1"></i>
+                                                التفاصيل
+                                            </button>
+                                            <button class="text-red-500 hover:text-red-700 text-sm font-medium">
+                                                <i class="fas fa-times ml-1"></i>
+                                                إلغاء
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="border border-sea-200 bg-white rounded-2xl p-4 opacity-75">
+                                <div class="flex flex-col md:flex-row justify-between gap-4">
+                                    <div class="flex items-start gap-4">
+                                        <div class="w-16 h-16 bg-sea-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-door-open text-sea-600 text-2xl"></i>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <h4 class="font-bold text-sea-800">شقة بغرفة نوم واحدة</h4>
+                                                <span class="bg-sea-200 text-sea-600 text-xs px-2 py-0.5 rounded-full">منتهية</span>
+                                            </div>
+                                            <p class="text-sea-600 text-sm">
+                                                <i class="fas fa-calendar ml-1"></i>
+                                                10 - 15 يوليو 2026 (5 ليالي)
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="text-left">
+                                        <p class="text-xl font-bold text-sand-600">20,000 د.ج</p>
+                                        <button class="text-sea-500 hover:text-sea-700 text-sm font-medium mt-2">
+                                            <i class="fas fa-eye ml-1"></i>
+                                            التفاصيل
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="border border-sea-200 bg-white rounded-2xl p-4 opacity-75">
+                                <div class="flex flex-col md:flex-row justify-between gap-4">
+                                    <div class="flex items-start gap-4">
+                                        <div class="w-16 h-16 bg-sea-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-door-open text-sea-600 text-2xl"></i>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <h4 class="font-bold text-sea-800">شقة استوديو</h4>
+                                                <span class="bg-sea-200 text-sea-600 text-xs px-2 py-0.5 rounded-full">منتهية</span>
+                                            </div>
+                                            <p class="text-sea-600 text-sm">
+                                                <i class="fas fa-calendar ml-1"></i>
+                                                1 - 5 يونيو 2026 (4 ليالي)
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="text-left">
+                                        <p class="text-xl font-bold text-sand-600">10,000 د.ج</p>
+                                        <button class="text-sea-500 hover:text-sea-700 text-sm font-medium mt-2">
+                                            <i class="fas fa-eye ml-1"></i>
+                                            التفاصيل
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="section-security" class="profile-section hidden">
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-sea-800 mb-6 flex items-center gap-2">
+                            <i class="fas fa-shield-alt text-sea-500"></i>
+                            الأمان وكلمة المرور
+                        </h3>
+
+                        <div class="mb-8 pb-8 border-b border-sea-200">
+                            <h4 class="font-bold text-sea-800 mb-4">تغيير كلمة المرور</h4>
+                            <form class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-sea-700 mb-2">كلمة المرور الحالية</label>
+                                    <input type="password" class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800" placeholder="••••••••">
+                                </div>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-sea-700 mb-2">كلمة المرور الجديدة</label>
+                                        <input type="password" class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800" placeholder="••••••••">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-sea-700 mb-2">تأكيد كلمة المرور</label>
+                                        <input type="password" class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800" placeholder="••••••••">
+                                    </div>
+                                </div>
+                                <button type="submit" class="bg-gradient-to-r from-sea-500 to-sea-600 text-white px-8 py-3 rounded-xl font-bold hover:from-sea-600 hover:to-sea-700 transition">
+                                    <i class="fas fa-key ml-2"></i>
+                                    تحديث كلمة المرور
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="mb-8 pb-8 border-b border-sea-200">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 bg-sea-100 rounded-xl flex items-center justify-center">
+                                        <i class="fas fa-mobile-alt text-sea-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-sea-800">المصادقة الثنائية</h4>
+                                        <p class="text-sea-600 text-sm">أضف طبقة أمان إضافية لحسابك</p>
+                                    </div>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer">
+                                    <div class="w-14 h-7 bg-sea-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sea-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-sea-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-sea-500"></div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-sea-800 mb-4">الجلسات النشطة</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between p-4 bg-sea-50 rounded-xl">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fas fa-desktop text-sea-500 text-xl"></i>
+                                        <div>
+                                            <p class="font-medium text-sea-800">Chrome على Windows</p>
+                                            <p class="text-sea-600 text-sm">الجزائر • الجلسة الحالية</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-green-500 text-sm font-medium">
+                                        <i class="fas fa-circle text-xs ml-1"></i>
+                                        نشط الآن
+                                    </span>
+                                </div>
+                                <div class="flex items-center justify-between p-4 bg-sea-50 rounded-xl">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fas fa-mobile-alt text-sea-500 text-xl"></i>
+                                        <div>
+                                            <p class="font-medium text-sea-800">Safari على iPhone</p>
+                                            <p class="text-sea-600 text-sm">الجزائر • آخر نشاط: منذ ساعتين</p>
+                                        </div>
+                                    </div>
+                                    <button class="text-red-500 hover:text-red-700 text-sm font-medium">
+                                        <i class="fas fa-times ml-1"></i>
+                                        إنهاء
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="section-notifications" class="profile-section hidden">
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-xl font-bold text-sea-800 flex items-center gap-2">
+                                <i class="fas fa-bell text-sea-500"></i>
+                                إعدادات الإشعارات
+                            </h3>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" class="sr-only peer" checked>
+                                <div class="w-14 h-7 bg-sea-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sea-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-sea-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-sea-500"></div>
+                            </label>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 border border-sea-200 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-sea-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-calendar-check text-sea-500"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-sea-800">تأكيدات الحجز</p>
+                                        <p class="text-sea-600 text-sm">إشعارات عند تأكيد أو تعديل الحجز</p>
+                                    </div>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer" checked>
+                                    <div class="w-11 h-6 bg-sea-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-sea-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-sea-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sea-500"></div>
+                                </label>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 border border-sea-200 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-sand-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-clock text-sand-500"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-sea-800">تذكير قبل الوصول</p>
+                                        <p class="text-sea-600 text-sm">تذكير قبل 24 ساعة من موعد الوصول</p>
+                                    </div>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer" checked>
+                                    <div class="w-11 h-6 bg-sea-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-sea-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-sea-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sea-500"></div>
+                                </label>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 border border-sea-200 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-percent text-green-500"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-sea-800">العروض والخصومات</p>
+                                        <p class="text-sea-600 text-sm">عروض خاصة وخصومات للإقامات الطويلة</p>
+                                    </div>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-sea-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-sea-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-sea-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sea-500"></div>
+                                </label>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 border border-sea-200 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-sea-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-newspaper text-sea-500"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-sea-800">النشرة البريدية</p>
+                                        <p class="text-sea-600 text-sm">أخبار الإقامة والفعاليات الجديدة</p>
+                                    </div>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-sea-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-sea-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-sea-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sea-500"></div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-6 border-t border-sea-200">
+                            <button class="w-full bg-gradient-to-r from-sea-500 to-sea-600 text-white px-8 py-3 rounded-xl font-bold hover:from-sea-600 hover:to-sea-700 transition">
+                                <i class="fas fa-save ml-2"></i>
+                                حفظ الإعدادات
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-sea-900 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <div class="w-10 h-10 bg-gradient-to-br from-sand-400 to-sand-600 rounded-full flex items-center justify-center">
+                    <i class="fas fa-home text-white"></i>
+                </div>
+                <span class="font-bold">Résidence Ziani</span>
+            </div>
+            <p class="text-sea-400 text-sm">
+                الهاتف: 043510901 | N7A, Marsa Ben M'Hidi
+            </p>
+            <p class="text-sea-500 text-xs mt-4">
+                جميع الحقوق محفوظة &copy; 2026
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Section Navigation
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.profile-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+
+            // Remove active class from all nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active-section', 'bg-sea-50', 'text-sea-800', 'font-bold');
+            });
+
+            // Show selected section
+            document.getElementById(`section-${sectionName}`).classList.remove('hidden');
+
+            // Add active class to selected nav button
+            const activeBtn = document.getElementById(`nav-${sectionName}`);
+            activeBtn.classList.add('active-section', 'bg-sea-50', 'text-sea-800', 'font-bold');
+        }
+
+        // Toggle Edit Mode
+        function toggleEdit(formId) {
+            const form = document.getElementById(formId);
+            const inputs = form.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.disabled = !input.disabled;
+            });
+        }
+
+        // Form submissions
+        document.getElementById('personalForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('تم حفظ التغييرات بنجاح!');
+            // TODO: Connect to Supabase
+        });
+
+        // Mobile menu
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            alert('يمكن إضافة قائمة منبثقة للجوال هنا');
+        });
+
+        // Notifications
+        document.getElementById('notificationBtn').addEventListener('click', () => {
+            alert('🔔 إشعاراتك:\n\n• تم تأكيد حجزك للشقة العائلية\n• تذكير: وصولك يوم 15 أغسطس\n• عرض خاص: خصم 20% للإقامات الطويلة');
+        });
+    </script>
+</body>
+</html>
