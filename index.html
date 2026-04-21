@@ -3,468 +3,906 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Résidence Ziani - Marsa Ben M'hidi</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        sea: {
-                            50: '#f0f9ff', 100: '#e0f2fe', 200: '#bae6fd', 300: '#7dd3fc', 400: '#38bdf8',
-                            500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1', 800: '#075985', 900: '#0c4a6e',
-                        },
-                        sand: {
-                            50: '#fdf8f0', 100: '#faf3e0', 200: '#f5e6c8', 300: '#edd9a8',
-                            400: '#e5c987', 500: '#ddb966', 600: '#d4a341',
-                        },
-                        coral: { 400: '#fb7185', 500: '#f43f5e', 600: '#e11d48', }
-                    },
-                    fontFamily: {
-                        arabic: ['Tajawal', 'sans-serif'],
-                    }
-                }
+    <title>Résidence Ziani - إقامة زياني | Luxury Beach Resort</title>
+    <meta name="description" content="تجربة فاخرة على شاطئ مرسى بن مهيدي - A luxury experience on Marsa Ben M'Hidi beach">
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gold: #D4AF37;
+            --dark-navy: #0A192F;
+            --light-gray: #F8F9FA;
+            --text-dark: #1A1A1A;
+            --text-light: #6C757D;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0A192F 0%, #1A3A52 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.15) 0%, transparent 50%);
+            animation: bgFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes bgFloat {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-50px, -50px) rotate(180deg); }
+        }
+
+        /* Glassmorphism Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            background: rgba(10, 25, 47, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(10, 25, 47, 0.95);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-gold);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .lang-switcher {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--glass-bg);
+            padding: 0.5rem;
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .lang-btn.active {
+            background: var(--primary-gold);
+            color: var(--dark-navy);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--primary-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-gold);
+            color: var(--dark-navy);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
+        }
+
+        .btn-secondary {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+            color: var(--primary-gold);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+            border-color: var(--primary-gold);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-gold), #F4D03F);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: var(--dark-navy);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* Rooms Section */
+        .rooms {
+            padding: 6rem 5%;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .rooms-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .room-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .room-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(212, 175, 55, 0.3);
+        }
+
+        .room-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, var(--primary-gold), #F4D03F);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--dark-navy);
+        }
+
+        .room-details {
+            padding: 2rem;
+        }
+
+        .room-details h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-gold);
+        }
+
+        .room-details p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .room-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-tag {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-gold);
+        }
+
+        .price-tag span {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 6rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .contact-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            color: var(--primary-gold);
+            margin-bottom: 1rem;
+        }
+
+        .contact-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .contact-card p, .contact-card a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4rem 5% 2rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary-gold);
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            line-height: 2;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-gold);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary-gold);
+            color: var(--dark-navy);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(10, 25, 47, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 5rem 2rem;
+                transition: right 0.3s ease;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .rooms-grid {
+                grid-template-columns: 1fr;
             }
         }
-    </script>
-    <style>
-        body { font-family: 'Tajawal', sans-serif; }
-        .hero-gradient { background: linear-gradient(135deg, rgba(14, 165, 233, 0.85) 0%, rgba(3, 105, 161, 0.75) 100%); }
-        .wave-pattern {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,165.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
-            background-size: cover;
+
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
         }
-        .card-hover { transition: all 0.3s ease; }
-        .card-hover:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); }
-        .smooth-scroll { scroll-behavior: smooth; }
-        .lang-dropdown { display: none; }
-        .lang-group:hover .lang-dropdown { display: block; }
+
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(212, 175, 55, 0.3);
+            border-top-color: var(--primary-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
-<body class="font-arabic bg-sea-50 smooth-scroll">
+<body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
 
-    <nav class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-lg z-50">
-        <div class="container mx-auto px-4 py-3">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-gradient-to-br from-sea-500 to-sea-700 rounded-full flex items-center justify-center">
-                        <i class="fas fa-home text-white text-xl"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-xl font-bold text-sea-800" dir="ltr">Résidence Ziani</h1>
-                    </div>
-                </div>
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
 
-                <div class="hidden lg:flex items-center gap-6">
-                    <a href="#home" class="text-sea-700 hover:text-sea-500 font-medium transition" data-i18n="nav_home">الرئيسية</a>
-                    <a href="#rooms" class="text-sea-700 hover:text-sea-500 font-medium transition" data-i18n="nav_rooms">شققنا</a>
-                    <a href="#features" class="text-sea-700 hover:text-sea-500 font-medium transition" data-i18n="nav_features">مميزاتنا</a>
-                    <a href="#contact" class="text-sea-700 hover:text-sea-500 font-medium transition" data-i18n="nav_contact">اتصل بنا</a>
-                    
-                    <div class="relative lang-group ms-2">
-                        <button class="flex items-center gap-2 text-sea-700 hover:text-sea-500 font-medium">
-                            <i class="fas fa-globe"></i> <span id="currentLang">العربية</span> <i class="fas fa-chevron-down text-xs"></i>
-                        </button>
-                        <div class="lang-dropdown absolute top-full end-0 mt-2 w-32 bg-white rounded-xl shadow-lg py-2 border border-sea-100">
-                            <button onclick="setLanguage('ar')" class="w-full text-start px-4 py-2 hover:bg-sea-50 text-sea-700 font-medium">العربية</button>
-                            <button onclick="setLanguage('fr')" class="w-full text-start px-4 py-2 hover:bg-sea-50 text-sea-700 font-medium">Français</button>
-                            <button onclick="setLanguage('en')" class="w-full text-start px-4 py-2 hover:bg-sea-50 text-sea-700 font-medium">English</button>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center gap-3 border-s-2 border-sea-200 ps-4 ms-2">
-                        <a href="login.html" class="text-sea-700 hover:text-sea-500 font-medium transition flex items-center gap-1">
-                            <i class="fas fa-sign-in-alt"></i> <span data-i18n="nav_login">دخول</span>
-                        </a>
-                        <a href="profile.html" class="text-sea-700 hover:text-sea-500 font-medium transition flex items-center gap-1">
-                            <i class="fas fa-user-circle"></i> <span data-i18n="nav_profile">حسابي</span>
-                        </a>
-                    </div>
-
-                    <a href="booking.html" class="bg-gradient-to-r from-sea-500 to-sea-600 text-white px-6 py-2 rounded-full font-medium hover:from-sea-600 hover:to-sea-700 transition shadow-lg flex items-center">
-                        <i class="fas fa-calendar-check me-2"></i><span data-i18n="nav_book">احجز الآن</span>
-                    </a>
-                </div>
-
-                <button id="mobileMenuBtn" class="lg:hidden text-sea-700 p-2">
-                    <i class="fas fa-bars text-2xl"></i>
-                </button>
-            </div>
-
-            <div id="mobileMenu" class="hidden lg:hidden mt-4 pb-4 border-t pt-4">
-                <div class="flex justify-center gap-2 mb-4">
-                    <button onclick="setLanguage('ar')" class="px-3 py-1 bg-sea-100 text-sea-700 rounded-lg text-sm font-bold">AR</button>
-                    <button onclick="setLanguage('fr')" class="px-3 py-1 bg-sea-100 text-sea-700 rounded-lg text-sm font-bold">FR</button>
-                    <button onclick="setLanguage('en')" class="px-3 py-1 bg-sea-100 text-sea-700 rounded-lg text-sm font-bold">EN</button>
-                </div>
-
-                <a href="#home" class="block py-2 text-sea-700 font-medium" data-i18n="nav_home">الرئيسية</a>
-                <a href="#rooms" class="block py-2 text-sea-700 font-medium" data-i18n="nav_rooms">شققنا</a>
-                <a href="#features" class="block py-2 text-sea-700 font-medium" data-i18n="nav_features">مميزاتنا</a>
-                <a href="#contact" class="block py-2 text-sea-700 font-medium" data-i18n="nav_contact">اتصل بنا</a>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-hotel"></i>
+                <span>RÉSIDENCE ZIANI</span>
+            </a>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" data-i18n="nav_home">الرئيسية</a></li>
+                <li><a href="#features" data-i18n="nav_about">من نحن</a></li>
+                <li><a href="#rooms" data-i18n="nav_booking">الحجز</a></li>
+                <li><a href="#contact" data-i18n="nav_contact">اتصل بنا</a></li>
+                <li id="authLinks"></li>
                 
-                <div class="border-t border-sea-100 my-2 pt-2">
-                    <a href="login.html" class="block py-2 text-sea-700 font-medium">
-                        <i class="fas fa-sign-in-alt me-2 w-5 text-center"></i><span data-i18n="nav_login">تسجيل الدخول</span>
-                    </a>
-                    <a href="profile.html" class="block py-2 text-sea-700 font-medium">
-                        <i class="fas fa-user-circle me-2 w-5 text-center"></i><span data-i18n="nav_profile">حسابي</span>
-                    </a>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="ar">عربي</button>
+                    <button class="lang-btn" data-lang="fr">FR</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
                 </div>
+            </ul>
 
-                <a href="booking.html" class="block mt-4 bg-gradient-to-r from-sea-500 to-sea-600 text-white px-6 py-3 rounded-full font-medium text-center">
-                    <i class="fas fa-calendar-check me-2"></i><span data-i18n="nav_book">احجز الآن</span>
-                </a>
-            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </nav>
 
-    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2073&q=80');"></div>
-        <div class="absolute inset-0 hero-gradient"></div>
-        <div class="absolute bottom-0 left-0 right-0 h-24 wave-pattern"></div>
-
-        <div class="relative z-10 container mx-auto px-4 text-center text-white pt-20">
-            <div class="max-w-4xl mx-auto">
-                <div class="mb-6">
-                    <span class="bg-white/20 backdrop-blur-sm px-6 py-2 rounded-full text-sm font-medium">
-                        <i class="fas fa-star text-sand-300 me-1"></i>
-                        <span data-i18n="hero_badge">إقامة فندقية متميزة في قلب الجزائر</span>
-                    </span>
-                </div>
-
-                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-                    <span data-i18n="hero_title_1">استمتع بعطلة لا تُنسى في</span><br>
-                    <span class="text-sand-200" data-i18n="hero_title_2">مرسى بن مهيدي</span>
-                </h1>
-
-                <p class="text-xl md:text-2xl mb-8 text-sea-100 leading-relaxed" data-i18n="hero_desc">
-                    شقق فندقية مفروشة بالكامل للإقامات الطويلة والقصيرة، على بُعد خطوات من البحر الأبيض المتوسط
-                </p>
-
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <a href="booking.html" class="group bg-gradient-to-r from-sand-500 to-sand-600 text-white px-10 py-4 rounded-full font-bold text-lg hover:from-sand-600 hover:to-sand-700 transition shadow-2xl transform hover:scale-105 flex items-center">
-                        <i class="fas fa-calendar-check me-2"></i>
-                        <span data-i18n="hero_btn_book">احجز شقتك الآن</span>
-                    </a>
-                    <a href="#rooms" class="bg-white/20 backdrop-blur-sm text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-white/30 transition border-2 border-white/50 flex items-center">
-                        <i class="fas fa-eye me-2"></i>
-                        <span data-i18n="hero_btn_explore">استكشف الشقق</span>
-                    </a>
-                </div>
-
-                <div class="mt-16 grid grid-cols-3 gap-6 max-w-2xl mx-auto">
-                    <div class="text-center">
-                        <div class="text-3xl md:text-4xl font-bold text-sand-300">50m</div>
-                        <div class="text-sm text-sea-200" data-i18n="stat_beach">من الشاطئ</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-3xl md:text-4xl font-bold text-sand-300">+20</div>
-                        <div class="text-sm text-sea-200" data-i18n="stat_apt">شقة مفروشة</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-3xl md:text-4xl font-bold text-sand-300">24/7</div>
-                        <div class="text-sm text-sea-200" data-i18n="stat_support">دعم متواصل</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="features" class="py-20 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <span class="text-sea-600 font-medium text-sm" data-i18n="feat_subtitle">لماذا تختارنا</span>
-                <h2 class="text-3xl md:text-4xl font-bold text-sea-800 mt-2" data-i18n="feat_title">مميزات تجعل إقامتك استثنائية</h2>
-                <div class="w-24 h-1 bg-gradient-to-r from-sea-500 to-sand-500 mx-auto mt-4 rounded-full"></div>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="card-hover bg-gradient-to-br from-sea-50 to-sea-100/50 p-8 rounded-2xl text-center">
-                    <div class="w-20 h-20 bg-gradient-to-br from-sea-400 to-sea-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                        <i class="fas fa-map-marker-alt text-white text-3xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-sea-800 mb-3" data-i18n="feat_1_title">موقع استراتيجي</h3>
-                    <p class="text-sea-700 leading-relaxed" data-i18n="feat_1_desc">قريبة جداً من الشاطئ وجميع المرافق السياحية في مرسى بن مهيدي</p>
-                </div>
-                <div class="card-hover bg-gradient-to-br from-sand-50 to-sand-100/50 p-8 rounded-2xl text-center">
-                    <div class="w-20 h-20 bg-gradient-to-br from-sand-400 to-sand-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                        <i class="fas fa-couch text-white text-3xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-sea-800 mb-3" data-i18n="feat_2_title">مجهزة بالكامل</h3>
-                    <p class="text-sea-700 leading-relaxed" data-i18n="feat_2_desc">شقق مفروشة بالكامل مع جميع وسائل الراحة للإقامات القصيرة والطويلة</p>
-                </div>
-                <div class="card-hover bg-gradient-to-br from-sea-50 to-sea-100/50 p-8 rounded-2xl text-center">
-                    <div class="w-20 h-20 bg-gradient-to-br from-sea-400 to-sea-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                        <i class="fas fa-wifi text-white text-3xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-sea-800 mb-3" data-i18n="feat_3_title">واي فاي مجاني</h3>
-                    <p class="text-sea-700 leading-relaxed" data-i18n="feat_3_desc">اتصال إنترنت عالي السرعة مجاناً في جميع الشقق والمناطق المشتركة</p>
-                </div>
-                <div class="card-hover bg-gradient-to-br from-sand-50 to-sand-100/50 p-8 rounded-2xl text-center">
-                    <div class="w-20 h-20 bg-gradient-to-br from-sand-400 to-sand-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                        <i class="fas fa-shield-alt text-white text-3xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-sea-800 mb-3" data-i18n="feat_4_title">أمان وراحة</h3>
-                    <p class="text-sea-700 leading-relaxed" data-i18n="feat_4_desc">نظام أمان متطور وبيئة هادئة قريبة من جميع الخدمات والمرافق</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="rooms" class="py-20 bg-gradient-to-b from-sea-50 to-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <span class="text-sea-600 font-medium text-sm" data-i18n="rooms_subtitle">شققنا</span>
-                <h2 class="text-3xl md:text-4xl font-bold text-sea-800 mt-2" data-i18n="rooms_title">اختر الشقة المناسبة لك</h2>
-                <div class="w-24 h-1 bg-gradient-to-r from-sea-500 to-sand-500 mx-auto mt-4 rounded-full"></div>
-                <p class="text-sea-600 mt-4 max-w-2xl mx-auto" data-i18n="rooms_desc">نقدم مجموعة متنوعة من الشقق المفروشة بالكامل لتلبية احتياجات مختلف الزوار</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-xl text-start">
-                    <div class="relative h-56 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
-                        <div class="absolute top-4 end-4 bg-sand-500 text-white px-4 py-1 rounded-full text-sm font-bold" data-i18n="room_1_badge">اقتصادية</div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-sea-800 mb-2" data-i18n="room_1_title">شقة استوديو</h3>
-                        <p class="text-sea-600 text-sm mb-4" data-i18n="room_1_desc">مثالية للأفراد أو الأزواج، مجهزة بكل ما تحتاجه</p>
-                        <div class="flex items-center gap-4 text-sea-600 text-sm mb-4">
-                            <span><i class="fas fa-bed me-1"></i><span data-i18n="room_1_bed">سرير مزدوج</span></span>
-                            <span><i class="fas fa-bath me-1"></i><span data-i18n="room_1_bath">حمام</span></span>
-                            <span><i class="fas fa-utensils me-1"></i><span data-i18n="room_1_kitchen">مطبخ</span></span>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div dir="ltr">
-                                <span class="text-2xl font-bold text-sand-600" data-i18n="room_1_price">2500 DZD</span>
-                                <span class="text-sea-600 text-sm" data-i18n="room_night">/ ليلة</span>
-                            </div>
-                            <a href="booking.html?room=studio" class="bg-gradient-to-r from-sea-500 to-sea-600 text-white px-6 py-2 rounded-full font-medium hover:from-sea-600 hover:to-sea-700 transition" data-i18n="nav_book">احجز الآن</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-xl text-start relative">
-                    <div class="absolute top-0 start-0 bg-gradient-to-r from-coral-500 to-coral-600 text-white px-6 py-2 rounded-br-2xl font-bold text-sm z-10">
-                        <i class="fas fa-fire me-1"></i><span data-i18n="room_2_badge">الأكثر طلباً</span>
-                    </div>
-                    <div class="relative h-56 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-sea-800 mb-2" data-i18n="room_2_title">شقة بغرفة نوم واحدة</h3>
-                        <p class="text-sea-600 text-sm mb-4" data-i18n="room_2_desc">مساحة أوسع مع غرفة نوم منفصلة ومعيشة مريحة</p>
-                        <div class="flex items-center gap-4 text-sea-600 text-sm mb-4">
-                            <span><i class="fas fa-bed me-1"></i><span data-i18n="room_2_bed">غرفة نوم</span></span>
-                            <span><i class="fas fa-couch me-1"></i><span data-i18n="room_2_living">صالة</span></span>
-                            <span><i class="fas fa-balance-scale me-1"></i><span data-i18n="room_2_space">60²م</span></span>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div dir="ltr">
-                                <span class="text-2xl font-bold text-sand-600" data-i18n="room_2_price">4000 DZD</span>
-                                <span class="text-sea-600 text-sm" data-i18n="room_night">/ ليلة</span>
-                            </div>
-                            <a href="booking.html?room=one-bedroom" class="bg-gradient-to-r from-sea-500 to-sea-600 text-white px-6 py-2 rounded-full font-medium hover:from-sea-600 hover:to-sea-700 transition" data-i18n="nav_book">احجز الآن</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-xl text-start">
-                    <div class="relative h-56 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
-                        <div class="absolute top-4 end-4 bg-sea-500 text-white px-4 py-1 rounded-full text-sm font-bold" data-i18n="room_3_badge">عائلية</div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-sea-800 mb-2" data-i18n="room_3_title">الشقة العائلية</h3>
-                        <p class="text-sea-600 text-sm mb-4" data-i18n="room_3_desc">مثالية للعائلات، غرفتين نوم ومساحة واسعة</p>
-                        <div class="flex items-center gap-4 text-sea-600 text-sm mb-4">
-                            <span><i class="fas fa-bed me-1"></i><span data-i18n="room_3_bed">غرفتين</span></span>
-                            <span><i class="fas fa-users me-1"></i><span data-i18n="room_3_guests">6 أشخاص</span></span>
-                            <span><i class="fas fa-balance-scale me-1"></i><span data-i18n="room_3_space">90²م</span></span>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div dir="ltr">
-                                <span class="text-2xl font-bold text-sand-600" data-i18n="room_3_price">6500 DZD</span>
-                                <span class="text-sea-600 text-sm" data-i18n="room_night">/ ليلة</span>
-                            </div>
-                            <a href="booking.html?room=family" class="bg-gradient-to-r from-sea-500 to-sea-600 text-white px-6 py-2 rounded-full font-medium hover:from-sea-600 hover:to-sea-700 transition" data-i18n="nav_book">احجز الآن</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="text-center mt-12">
-                <a href="tel:0771571010" class="inline-flex items-center text-sea-600 font-medium hover:text-sea-800 transition">
-                    <i class="fas fa-phone me-2"></i>
-                    <span data-i18n="room_more_info">اتصل بنا لمعرفة المزيد من الخيارات والأسعار الخاصة بالإقامات الطويلة</span>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content" data-aos="fade-up">
+            <div class="hero-badge">★ LUXURY BEACH RESORT ★</div>
+            <h1 data-i18n="hero_title">إقامة زياني</h1>
+            <p data-i18n="hero_subtitle">تجربة فاخرة على شاطئ مرسى بن مهيدي</p>
+            <div class="cta-buttons">
+                <a href="booking.html" class="btn-primary">
+                    <i class="fas fa-calendar-check"></i>
+                    <span data-i18n="hero_cta">احجز الآن</span>
+                </a>
+                <a href="#features" class="btn-secondary">
+                    <i class="fas fa-chevron-down"></i>
+                    <span data-i18n="hero_explore">اكتشف المزيد</span>
                 </a>
             </div>
         </div>
     </section>
 
-    <section class="py-16 bg-gradient-to-r from-sea-600 to-sea-800">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4" data-i18n="cta_title">جاهز لحجز إقامتك القادمة؟</h2>
-            <p class="text-sea-100 text-lg mb-8 max-w-2xl mx-auto" data-i18n="cta_desc">احجز الآن واحصل على أفضل الأسعار للإقامات القصيرة والطويلة في مرسى بن مهيدي</p>
-            <a href="booking.html" class="inline-flex items-center bg-gradient-to-r from-sand-500 to-sand-600 text-white px-10 py-4 rounded-full font-bold text-lg hover:from-sand-600 hover:to-sand-700 transition shadow-2xl transform hover:scale-105">
-                <i class="fas fa-calendar-check me-3"></i>
-                <span data-i18n="nav_book">احجز إقامتك الآن</span>
-            </a>
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-title" data-aos="fade-up">
+            <h2 data-i18n="features_title">لماذا تختار إقامة زياني؟</h2>
         </div>
-    </section>
 
-    <section id="contact" class="py-20 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <span class="text-sea-600 font-medium text-sm" data-i18n="contact_subtitle">تواصل معنا</span>
-                <h2 class="text-3xl md:text-4xl font-bold text-sea-800 mt-2" data-i18n="contact_title">معلومات الاتصال</h2>
-                <div class="w-24 h-1 bg-gradient-to-r from-sea-500 to-sand-500 mx-auto mt-4 rounded-full"></div>
+        <div class="features-grid">
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">
+                    <i class="fas fa-gem"></i>
+                </div>
+                <h3 data-i18n="feature_luxury">فخامة لا مثيل لها</h3>
+                <p data-i18n="feature_luxury_desc">غرف مصممة بأرقى المعايير العالمية</p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <div class="card-hover bg-gradient-to-br from-sea-50 to-sea-100 p-8 rounded-2xl text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-sea-400 to-sea-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-phone text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-sea-800 mb-2" data-i18n="contact_phone_title">الهاتف</h3>
-                    <a href="tel:0771571010" class="text-2xl font-bold text-sea-600 hover:text-sea-800 transition" dir="ltr">0771 57 10 10</a>
-                    <p class="text-sea-600 text-sm mt-2" data-i18n="contact_phone_desc">للحجز والاستفسار</p>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
+                    <i class="fas fa-map-marker-alt"></i>
                 </div>
-
-                <div class="card-hover bg-gradient-to-br from-sand-50 to-sand-100 p-8 rounded-2xl text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-sand-400 to-sand-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-map-marked-alt text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-sea-800 mb-2" data-i18n="contact_address_title">العنوان</h3>
-                    <p class="text-sea-700 font-medium" dir="ltr">N7A, Marsa Ben M'Hidi</p>
-                    <p class="text-sea-600 text-sm mt-2" data-i18n="contact_address_desc">مرسى بن مهيدي، الجزائر</p>
-                </div>
-
-                <div class="card-hover bg-gradient-to-br from-sea-50 to-sea-100 p-8 rounded-2xl text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-sea-400 to-sea-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-envelope text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-sea-800 mb-2" data-i18n="contact_email_title">البريد الإلكتروني</h3>
-                    <a href="mailto:zianiziani1331@gmail.com" class="text-sea-600 hover:text-sea-800 transition" dir="ltr">zianiziani1331@gmail.com</a>
-                    <p class="text-sea-600 text-sm mt-2" data-i18n="contact_email_desc">للاستفسارات العامة</p>
-                </div>
+                <h3 data-i18n="feature_location">موقع استراتيجي</h3>
+                <p data-i18n="feature_location_desc">على بعد خطوات من الشاطئ والمرافق</p>
             </div>
 
-            <div class="mt-12 rounded-2xl overflow-hidden shadow-xl h-80 bg-sea-100 flex items-center justify-center">
-                <div class="text-center">
-                    <i class="fas fa-map text-6xl text-sea-400 mb-4"></i>
-                    <p class="text-sea-600 font-medium" data-i18n="contact_map">خريطة الموقع متاحة عند الاتصال</p>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon">
+                    <i class="fas fa-concierge-bell"></i>
                 </div>
+                <h3 data-i18n="feature_service">خدمة 24/7</h3>
+                <p data-i18n="feature_service_desc">فريق محترف لخدمتك على مدار الساعة</p>
+            </div>
+
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="feature-icon">
+                    <i class="fas fa-wifi"></i>
+                </div>
+                <h3 data-i18n="feature_wifi">إنترنت فائق السرعة</h3>
+                <p data-i18n="feature_wifi_desc">WiFi مجاني في جميع الغرف</p>
             </div>
         </div>
     </section>
 
-    <footer class="bg-gradient-to-b from-sea-900 to-sea-950 text-white py-12 text-start">
-        <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div class="md:col-span-2">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-12 h-12 bg-gradient-to-br from-sand-400 to-sand-600 rounded-full flex items-center justify-center">
-                            <i class="fas fa-home text-white text-xl"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold" dir="ltr">Résidence Ziani</h3>
-                        </div>
-                    </div>
-                    <p class="text-sea-300 leading-relaxed mb-4" data-i18n="footer_desc">
-                        شقق فندقية مفروشة بالكامل في مرسى بن مهيدي، قريبة من الشاطئ وجميع المرافق السياحية.
-                    </p>
-                    <div class="flex gap-4">
-                        <a href="https://www.facebook.com/p/H%C3%B4tel-Ziani-61558914820482/" target="_blank" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-sand-500 transition">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-sand-500 transition">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="https://wa.me/213771571010" target="_blank" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-sand-500 transition">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                    </div>
-                </div>
+    <!-- Rooms Section -->
+    <section class="rooms" id="rooms">
+        <div class="section-title" data-aos="fade-up">
+            <h2 data-i18n="rooms_title">أنواع الغرف</h2>
+        </div>
 
-                <div>
-                    <h4 class="font-bold text-lg mb-4 text-sand-300" data-i18n="footer_links_title">روابط سريعة</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#home" class="text-sea-300 hover:text-sand-300 transition" data-i18n="nav_home">الرئيسية</a></li>
-                        <li><a href="#rooms" class="text-sea-300 hover:text-sand-300 transition" data-i18n="nav_rooms">شققنا</a></li>
-                        <li><a href="login.html" class="text-sea-300 hover:text-sand-300 transition" data-i18n="nav_login">تسجيل الدخول</a></li>
-                        <li><a href="#contact" class="text-sea-300 hover:text-sand-300 transition" data-i18n="nav_contact">اتصل بنا</a></li>
-                    </ul>
-                </div>
+        <div class="rooms-grid" id="roomsGrid">
+            <!-- Rooms will be loaded dynamically -->
+        </div>
+    </section>
 
-                <div>
-                    <h4 class="font-bold text-lg mb-4 text-sand-300" data-i18n="footer_contact_title">معلومات الاتصال</h4>
-                    <ul class="space-y-3">
-                        <li class="flex items-start gap-3">
-                            <i class="fas fa-phone text-sand-400 mt-1"></i>
-                            <a href="tel:0771571010" class="text-sea-300 hover:text-white transition" dir="ltr">0771 57 10 10</a>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fas fa-map-marker-alt text-sand-400 mt-1"></i>
-                            <span class="text-sea-300" dir="ltr">N7A, Marsa Ben M'Hidi</span>
-                        </li>
-                    </ul>
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="section-title" data-aos="fade-up">
+            <h2 data-i18n="contact_title">اتصل بنا</h2>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="contact-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3 data-i18n="contact_address">العنوان</h3>
+                <p>N7A, Marsa Ben M'Hidi<br>Algeria</p>
+            </div>
+
+            <div class="contact-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="contact-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <h3 data-i18n="contact_phone">الهاتف</h3>
+                <p>
+                    <a href="tel:+213771571010">0771 57 10 10</a><br>
+                    <a href="tel:+213555878664">0555 87 86 64</a>
+                </p>
+            </div>
+
+            <div class="contact-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h3 data-i18n="contact_email">البريد الإلكتروني</h3>
+                <p><a href="mailto:hotelziani@gmail.com">hotelziani@gmail.com</a></p>
+            </div>
+
+            <div class="contact-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="contact-icon">
+                    <i class="fas fa-fax"></i>
+                </div>
+                <h3 data-i18n="contact_fax">الفاكس</h3>
+                <p>043 51 09 01 / 02 / 03</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3 data-i18n="footer_about">عن إقامة زياني</h3>
+                <p data-i18n="footer_about_text">وجهتك الفاخرة على ساحل البحر المتوسط</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/profile.php?id=100094520373011" target="_blank">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
 
-            <div class="border-t border-sea-800 pt-8 text-center text-sea-400">
-                &copy; 2026 Résidence Ziani. <span data-i18n="footer_rights">جميع الحقوق محفوظة.</span>
+            <div class="footer-section">
+                <h3 data-i18n="footer_links">روابط سريعة</h3>
+                <a href="#home" data-i18n="nav_home">الرئيسية</a>
+                <a href="#features" data-i18n="nav_about">من نحن</a>
+                <a href="booking.html" data-i18n="nav_booking">الحجز</a>
+                <a href="#contact" data-i18n="nav_contact">اتصل بنا</a>
             </div>
+
+            <div class="footer-section">
+                <h3 data-i18n="footer_contact">معلومات الاتصال</h3>
+                <p>N7A, Marsa Ben M'Hidi, Algeria</p>
+                <p>0771 57 10 10 / 0555 87 86 64</p>
+                <p>hotelziani@gmail.com</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 Résidence Ziani. <span data-i18n="footer_rights">جميع الحقوق محفوظة</span></p>
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script src="translations.js"></script>
+    <script src="supabase.js"></script>
+    
     <script>
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-        mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
         });
 
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                if (this.getAttribute('href').startsWith('#')) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+        // Hide loading screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hidden');
+            }, 500);
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        // Close mobile menu on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.querySelector('i').classList.replace('fa-times', 'fa-bars');
             });
         });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="supabase.js"></script>
 
-    <script>
-        async function fetchLivePrices() {
-            if(window.supabaseClient) {
-                const { data, error } = await window.supabaseClient.from('rooms_settings').select('*');
-                if(!error && data) {
-                    data.forEach(room => {
-                        // البحث عن العنصر المناسب لكل شقة وتحديث سعره
-                        let priceElement;
-                        if(room.room_type === 'studio') priceElement = document.querySelector('[data-i18n="room_1_price"]');
-                        if(room.room_type === 'one-bedroom') priceElement = document.querySelector('[data-i18n="room_2_price"]');
-                        if(room.room_type === 'family') priceElement = document.querySelector('[data-i18n="room_3_price"]');
-                        
-                        if(priceElement) {
-                            priceElement.textContent = `${room.price_per_night} DZD`;
-                        }
-                    });
+        // Load rooms dynamically
+        async function loadRooms() {
+            const prices = await ResidenceZiani.RoomSettings.getPrices();
+            if (!prices) return;
+
+            const rooms = [
+                {
+                    type: 'studio',
+                    icon: 'fa-bed',
+                    nameKey: 'room_studio',
+                    descKey: 'room_studio_desc',
+                    price: prices.studio_price
+                },
+                {
+                    type: 'one_bedroom',
+                    icon: 'fa-home',
+                    nameKey: 'room_onebedroom',
+                    descKey: 'room_onebedroom_desc',
+                    price: prices.one_bedroom_price
+                },
+                {
+                    type: 'family',
+                    icon: 'fa-building',
+                    nameKey: 'room_family',
+                    descKey: 'room_family_desc',
+                    price: prices.family_price
                 }
+            ];
+
+            const roomsGrid = document.getElementById('roomsGrid');
+            roomsGrid.innerHTML = rooms.map((room, index) => `
+                <div class="room-card" data-aos="fade-up" data-aos-delay="${(index + 1) * 100}">
+                    <div class="room-image">
+                        <i class="fas ${room.icon}"></i>
+                    </div>
+                    <div class="room-details">
+                        <h3 data-i18n="${room.nameKey}">${langManager.t(room.nameKey)}</h3>
+                        <p data-i18n="${room.descKey}">${langManager.t(room.descKey)}</p>
+                        <div class="room-price">
+                            <div class="price-tag">
+                                ${room.price.toLocaleString('fr-DZ')} DZD
+                                <span>/ <span data-i18n="room_night">${langManager.t('room_night')}</span></span>
+                            </div>
+                        </div>
+                        <a href="booking.html?room=${room.type}" class="btn-primary" style="width: 100%; justify-content: center;">
+                            <i class="fas fa-calendar-check"></i>
+                            <span data-i18n="room_book">${langManager.t('room_book')}</span>
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Update auth links
+        async function updateAuthLinks() {
+            const user = await ResidenceZiani.Auth.getCurrentUser();
+            const authLinks = document.getElementById('authLinks');
+            
+            if (user) {
+                const isAdmin = await ResidenceZiani.Utils.isAdmin(user.email);
+                authLinks.innerHTML = `
+                    <li><a href="profile.html" data-i18n="nav_profile">${langManager.t('nav_profile')}</a></li>
+                    ${isAdmin ? '<li><a href="admin.html">Admin</a></li>' : ''}
+                    <li><a href="#" onclick="logout()" data-i18n="nav_logout">${langManager.t('nav_logout')}</a></li>
+                `;
+            } else {
+                authLinks.innerHTML = `
+                    <li><a href="login.html" data-i18n="nav_login">${langManager.t('nav_login')}</a></li>
+                    <li><a href="register.html" data-i18n="nav_register">${langManager.t('nav_register')}</a></li>
+                `;
             }
         }
-        // تشغيل الدالة بمجرد فتح الصفحة
+
+        // Logout function
+        async function logout() {
+            await ResidenceZiani.Auth.signOut();
+            window.location.reload();
+        }
+
+        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(fetchLivePrices, 500); // تأخير بسيط لضمان تحميل الترجمة أولاً
+            loadRooms();
+            updateAuthLinks();
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
         });
     </script>
 </body>
