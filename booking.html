@@ -7,54 +7,25 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        sea: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            200: '#bae6fd',
-                            300: '#7dd3fc',
-                            400: '#38bdf8',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            700: '#0369a1',
-                            800: '#075985',
-                            900: '#0c4a6e',
-                        },
-                        sand: {
-                            50: '#fdf8f0',
-                            100: '#faf3e0',
-                            200: '#f5e6c8',
-                            300: '#edd9a8',
-                            400: '#e5c987',
-                            500: '#ddb966',
-                            600: '#d4a341',
-                        }
+                        sea: { 50: '#f0f9ff', 100: '#e0f2fe', 200: '#bae6fd', 300: '#7dd3fc', 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1', 800: '#075985', 900: '#0c4a6e', },
+                        sand: { 50: '#fdf8f0', 100: '#faf3e0', 200: '#f5e6c8', 300: '#edd9a8', 400: '#e5c987', 500: '#ddb966', 600: '#d4a341', }
                     },
-                    fontFamily: {
-                        arabic: ['Tajawal', 'sans-serif'],
-                    }
+                    fontFamily: { arabic: ['Tajawal', 'sans-serif'], }
                 }
             }
         }
     </script>
     <style>
-        body {
-            font-family: 'Tajawal', sans-serif;
-        }
-        .input-field {
-            transition: all 0.3s ease;
-        }
-        .input-field:focus {
-            border-color: #0ea5e9;
-            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
-        }
-        .booking-header {
-            background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
-        }
+        body { font-family: 'Tajawal', sans-serif; }
+        .input-field { transition: all 0.3s ease; }
+        .input-field:focus { border-color: #0ea5e9; box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1); }
+        .booking-header { background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%); }
     </style>
 </head>
 <body class="font-arabic bg-sea-50 min-h-screen">
@@ -71,9 +42,9 @@
                         <p class="text-xs text-sea-200">إقامة زياني</p>
                     </div>
                 </a>
-                <a href="tel:043510901" class="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-white/30 transition">
+                <a href="tel:0771571010" class="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-white/30 transition">
                     <i class="fas fa-phone"></i>
-                    <span class="hidden sm:inline">043510901</span>
+                    <span class="hidden sm:inline" dir="ltr">0771 57 10 10</span>
                 </a>
             </div>
         </div>
@@ -92,46 +63,23 @@
                         <div class="grid md:grid-cols-2 gap-4">
                             <div>
                                 <label for="checkIn" class="block text-sm font-medium text-sea-800 mb-2">
-                                    <i class="fas fa-calendar-check ml-2 text-sea-500"></i>
-                                    تاريخ الوصول
-                                    <span class="text-red-500">*</span>
+                                    <i class="fas fa-calendar-check ml-2 text-sea-500"></i> تاريخ الوصول <span class="text-red-500">*</span>
                                 </label>
-                                <input
-                                    type="date"
-                                    id="checkIn"
-                                    name="checkIn"
-                                    required
-                                    class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800"
-                                >
+                                <input type="date" id="checkIn" name="checkIn" required class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800">
                             </div>
                             <div>
                                 <label for="checkOut" class="block text-sm font-medium text-sea-800 mb-2">
-                                    <i class="fas fa-calendar-times ml-2 text-sea-500"></i>
-                                    تاريخ المغادرة
-                                    <span class="text-red-500">*</span>
+                                    <i class="fas fa-calendar-times ml-2 text-sea-500"></i> تاريخ المغادرة <span class="text-red-500">*</span>
                                 </label>
-                                <input
-                                    type="date"
-                                    id="checkOut"
-                                    name="checkOut"
-                                    required
-                                    class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800"
-                                >
+                                <input type="date" id="checkOut" name="checkOut" required class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800">
                             </div>
                         </div>
 
                         <div>
                             <label for="roomType" class="block text-sm font-medium text-sea-800 mb-2">
-                                <i class="fas fa-door-open ml-2 text-sea-500"></i>
-                                نوع الشقة
-                                <span class="text-red-500">*</span>
+                                <i class="fas fa-door-open ml-2 text-sea-500"></i> نوع الشقة <span class="text-red-500">*</span>
                             </label>
-                            <select
-                                id="roomType"
-                                name="roomType"
-                                required
-                                class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800 bg-white"
-                            >
+                            <select id="roomType" name="roomType" required class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800 bg-white">
                                 <option value="" disabled selected>...اختر نوع الشقة</option>
                                 <option value="studio" data-price="2500">شقة استوديو - 2500 د.ج/ليلة</option>
                                 <option value="one-bedroom" data-price="4000">شقة بغرفة نوم واحدة - 4000 د.ج/ليلة</option>
@@ -141,132 +89,50 @@
 
                         <div>
                             <label for="guests" class="block text-sm font-medium text-sea-800 mb-2">
-                                <i class="fas fa-users ml-2 text-sea-500"></i>
-                                عدد الأفراد
-                                <span class="text-red-500">*</span>
+                                <i class="fas fa-users ml-2 text-sea-500"></i> عدد الأفراد <span class="text-red-500">*</span>
                             </label>
                             <div class="flex items-center gap-4">
-                                <button
-                                    type="button"
-                                    id="decreaseGuests"
-                                    class="w-12 h-12 bg-sea-100 text-sea-600 rounded-xl hover:bg-sea-200 transition font-bold text-xl"
-                                >
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <input
-                                    type="number"
-                                    id="guests"
-                                    name="guests"
-                                    value="2"
-                                    min="1"
-                                    max="10"
-                                    required
-                                    class="input-field w-24 px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800 text-center text-xl font-bold"
-                                >
-                                <button
-                                    type="button"
-                                    id="increaseGuests"
-                                    class="w-12 h-12 bg-sea-100 text-sea-600 rounded-xl hover:bg-sea-200 transition font-bold text-xl"
-                                >
-                                    <i class="fas fa-plus"></i>
-                                </button>
+                                <button type="button" id="decreaseGuests" class="w-12 h-12 bg-sea-100 text-sea-600 rounded-xl hover:bg-sea-200 transition font-bold text-xl"><i class="fas fa-minus"></i></button>
+                                <input type="number" id="guests" name="guests" value="2" min="1" max="10" required class="input-field w-24 px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800 text-center text-xl font-bold">
+                                <button type="button" id="increaseGuests" class="w-12 h-12 bg-sea-100 text-sea-600 rounded-xl hover:bg-sea-200 transition font-bold text-xl"><i class="fas fa-plus"></i></button>
                                 <span class="text-sea-600 text-sm">(الحد الأقصى حسب نوع الشقة)</span>
                             </div>
                         </div>
 
                         <div class="border-t border-sea-200 pt-6">
-                            <h3 class="text-lg font-bold text-sea-800 mb-4">
-                                <i class="fas fa-user-circle ml-2 text-sea-500"></i>
-                                المعلومات الشخصية
-                            </h3>
-
+                            <h3 class="text-lg font-bold text-sea-800 mb-4"><i class="fas fa-user-circle ml-2 text-sea-500"></i> المعلومات الشخصية</h3>
                             <div class="grid md:grid-cols-2 gap-4">
                                 <div>
-                                    <label for="fullName" class="block text-sm font-medium text-sea-800 mb-2">
-                                        الاسم الكامل
-                                        <span class="text-red-500">*</span>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="fullName"
-                                        name="fullName"
-                                        required
-                                        placeholder="محمد أحمد"
-                                        class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800 placeholder-sea-400"
-                                    >
+                                    <label for="fullName" class="block text-sm font-medium text-sea-800 mb-2">الاسم الكامل <span class="text-red-500">*</span></label>
+                                    <input type="text" id="fullName" name="fullName" required placeholder="محمد أحمد" class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800 placeholder-sea-400">
                                 </div>
                                 <div>
-                                    <label for="phone" class="block text-sm font-medium text-sea-800 mb-2">
-                                        رقم الهاتف
-                                        <span class="text-red-500">*</span>
-                                    </label>
-                                    <input
-                                        type="tel"
-                                        id="phone"
-                                        name="phone"
-                                        required
-                                        placeholder="0550 12 34 56"
-                                        pattern="[0-9\s]{10,14}"
-                                        class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800 placeholder-sea-400"
-                                    >
+                                    <label for="phone" class="block text-sm font-medium text-sea-800 mb-2">رقم الهاتف <span class="text-red-500">*</span></label>
+                                    <input type="tel" id="phone" name="phone" required placeholder="0550 12 34 56" pattern="[0-9\s]{10,14}" class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800 placeholder-sea-400">
                                 </div>
                             </div>
-
                             <div class="mt-4">
-                                <label for="email" class="block text-sm font-medium text-sea-800 mb-2">
-                                    البريد الإلكتروني
-                                    <span class="text-red-500">*</span>
-                                </label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    required
-                                    placeholder="example@email.com"
-                                    class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800 placeholder-sea-400"
-                                >
+                                <label for="email" class="block text-sm font-medium text-sea-800 mb-2">البريد الإلكتروني <span class="text-red-500">*</span></label>
+                                <input type="email" id="email" name="email" required placeholder="example@email.com" class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800 placeholder-sea-400">
                             </div>
                         </div>
 
                         <div>
-                            <label for="notes" class="block text-sm font-medium text-sea-800 mb-2">
-                                <i class="fas fa-comment-dots ml-2 text-sea-500"></i>
-                                ملاحظات إضافية
-                            </label>
-                            <textarea
-                                id="notes"
-                                name="notes"
-                                rows="4"
-                                placeholder="...أي متطلبات خاصة أو استفسارات إضافية"
-                                class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800 placeholder-sea-400 resize-none"
-                            ></textarea>
+                            <label for="notes" class="block text-sm font-medium text-sea-800 mb-2"><i class="fas fa-comment-dots ml-2 text-sea-500"></i> ملاحظات إضافية</label>
+                            <textarea id="notes" name="notes" rows="4" placeholder="...أي متطلبات خاصة أو استفسارات إضافية" class="input-field w-full px-4 py-3 border border-sea-200 rounded-xl focus:outline-none text-sea-800 placeholder-sea-400 resize-none"></textarea>
                         </div>
 
                         <div>
                             <label class="flex items-start gap-3 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    id="terms"
-                                    name="terms"
-                                    required
-                                    class="w-5 h-5 text-sea-500 border-sea-300 rounded mt-0.5 focus:ring-sea-500"
-                                >
+                                <input type="checkbox" id="terms" name="terms" required class="w-5 h-5 text-sea-500 border-sea-300 rounded mt-0.5 focus:ring-sea-500">
                                 <span class="text-sm text-sea-600">
-                                    أوافق على
-                                    <a href="#" class="text-sea-500 hover:text-sea-700 font-medium underline">الشروط والأحكام</a>
-                                    و
-                                    <a href="#" class="text-sea-500 hover:text-sea-700 font-medium underline">سياسة الإلغاء</a>
-                                    لـ Résidence Ziani
+                                    أوافق على <a href="#" class="text-sea-500 hover:text-sea-700 font-medium underline">الشروط والأحكام</a> و <a href="#" class="text-sea-500 hover:text-sea-700 font-medium underline">سياسة الإلغاء</a> لـ Résidence Ziani
                                 </span>
                             </label>
                         </div>
 
-                        <button
-                            type="submit"
-                            class="w-full bg-gradient-to-r from-sea-500 to-sea-600 text-white py-4 rounded-xl font-bold text-lg hover:from-sea-600 hover:to-sea-700 transition shadow-lg transform hover:scale-[1.02]"
-                        >
-                            <i class="fas fa-check-circle ml-2"></i>
-                            تأكيد الحجز
+                        <button type="submit" class="w-full bg-gradient-to-r from-sea-500 to-sea-600 text-white py-4 rounded-xl font-bold text-lg hover:from-sea-600 hover:to-sea-700 transition shadow-lg transform hover:scale-[1.02]">
+                            <i class="fas fa-check-circle ml-2"></i> تأكيد الحجز
                         </button>
                     </form>
                 </div>
@@ -274,16 +140,11 @@
 
             <div class="lg:col-span-1">
                 <div class="bg-white rounded-2xl shadow-xl p-6 sticky top-4">
-                    <h3 class="text-xl font-bold text-sea-800 mb-4 flex items-center gap-2">
-                        <i class="fas fa-receipt text-sea-500"></i>
-                        ملخص الحجز
-                    </h3>
+                    <h3 class="text-xl font-bold text-sea-800 mb-4 flex items-center gap-2"><i class="fas fa-receipt text-sea-500"></i> ملخص الحجز</h3>
 
                     <div class="space-y-4 pb-4 border-b border-sea-200">
                         <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-sand-100 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-door-open text-sand-600 text-xl"></i>
-                            </div>
+                            <div class="w-12 h-12 bg-sand-100 rounded-xl flex items-center justify-center"><i class="fas fa-door-open text-sand-600 text-xl"></i></div>
                             <div>
                                 <p class="text-sm text-sea-500">نوع الشقة</p>
                                 <p id="summaryRoomType" class="font-bold text-sea-800">لم يتم الاختيار</p>
@@ -291,9 +152,7 @@
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-sea-100 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-calendar text-sea-600 text-xl"></i>
-                            </div>
+                            <div class="w-12 h-12 bg-sea-100 rounded-xl flex items-center justify-center"><i class="fas fa-calendar text-sea-600 text-xl"></i></div>
                             <div>
                                 <p class="text-sm text-sea-500">التواريخ</p>
                                 <p id="summaryDates" class="font-medium text-sea-800 text-sm">-- إلى --</p>
@@ -301,9 +160,7 @@
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-sea-100 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-moon text-sea-600 text-xl"></i>
-                            </div>
+                            <div class="w-12 h-12 bg-sea-100 rounded-xl flex items-center justify-center"><i class="fas fa-moon text-sea-600 text-xl"></i></div>
                             <div>
                                 <p class="text-sm text-sea-500">عدد الليالي</p>
                                 <p id="summaryNights" class="font-bold text-sea-800">0 ليلة</p>
@@ -311,9 +168,7 @@
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-sea-100 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-users text-sea-600 text-xl"></i>
-                            </div>
+                            <div class="w-12 h-12 bg-sea-100 rounded-xl flex items-center justify-center"><i class="fas fa-users text-sea-600 text-xl"></i></div>
                             <div>
                                 <p class="text-sm text-sea-500">عدد الأفراد</p>
                                 <p id="summaryGuests" class="font-bold text-sea-800">2 أشخاص</p>
@@ -322,18 +177,9 @@
                     </div>
 
                     <div class="pt-4 space-y-2">
-                        <div class="flex justify-between text-sea-600">
-                            <span>سعر الليلة</span>
-                            <span id="summaryPricePerNight" class="font-medium">0 د.ج</span>
-                        </div>
-                        <div class="flex justify-between text-sea-600">
-                            <span>عدد الليالي</span>
-                            <span id="summaryNightsCount" class="font-medium">0 ×</span>
-                        </div>
-                        <div class="flex justify-between text-sea-600">
-                            <span>الضرائب والرسوم</span>
-                            <span class="font-medium text-green-600">شاملة</span>
-                        </div>
+                        <div class="flex justify-between text-sea-600"><span>سعر الليلة</span><span id="summaryPricePerNight" class="font-medium">0 د.ج</span></div>
+                        <div class="flex justify-between text-sea-600"><span>عدد الليالي</span><span id="summaryNightsCount" class="font-medium">0 ×</span></div>
+                        <div class="flex justify-between text-sea-600"><span>الضرائب والرسوم</span><span class="font-medium text-green-600">شاملة</span></div>
                     </div>
 
                     <div class="border-t border-sea-200 pt-4 mt-4">
@@ -344,32 +190,17 @@
                     </div>
 
                     <div class="bg-sea-50 rounded-xl p-4 mt-6">
-                        <h4 class="font-bold text-sea-800 mb-2 text-sm">
-                            <i class="fas fa-info-circle ml-1 text-sea-500"></i>
-                            معلومات هامة
-                        </h4>
+                        <h4 class="font-bold text-sea-800 mb-2 text-sm"><i class="fas fa-info-circle ml-1 text-sea-500"></i> معلومات هامة</h4>
                         <ul class="text-xs text-sea-600 space-y-2">
-                            <li class="flex items-start gap-2">
-                                <i class="fas fa-check text-green-500 mt-0.5"></i>
-                                <span>تأكيد الحجز يتم خلال 24 ساعة</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <i class="fas fa-check text-green-500 mt-0.5"></i>
-                                <span>إلغاء مجاني حتى 48 ساعة قبل الوصول</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <i class="fas fa-check text-green-500 mt-0.5"></i>
-                                <span>خصومات خاصة للإقامات الطويلة (+7 ليالي)</span>
-                            </li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-500 mt-0.5"></i><span>تأكيد الحجز يتم خلال 24 ساعة</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-500 mt-0.5"></i><span>إلغاء مجاني حتى 48 ساعة قبل الوصول</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-500 mt-0.5"></i><span>خصومات خاصة للإقامات الطويلة (+7 ليالي)</span></li>
                         </ul>
                     </div>
 
                     <div class="bg-gradient-to-r from-sand-50 to-sand-100 rounded-xl p-4 mt-4 text-center">
                         <p class="text-xs text-sand-700 mb-2">للحجز الفوري أو الاستفسار</p>
-                        <a href="tel:043510901" class="text-lg font-bold text-sand-600 hover:text-sand-700 transition">
-                            <i class="fas fa-phone ml-2"></i>
-                            043510901
-                        </a>
+                        <a href="tel:0771571010" class="text-lg font-bold text-sand-600 hover:text-sand-700 transition" dir="ltr"><i class="fas fa-phone ml-2"></i> 0771 57 10 10</a>
                     </div>
                 </div>
             </div>
@@ -384,14 +215,12 @@
                 </div>
                 <span class="font-bold">Résidence Ziani</span>
             </div>
-            <p class="text-sea-400 text-sm">
-                الهاتف: 043510901 | N7A, Marsa Ben M'Hidi
-            </p>
-            <p class="text-sea-500 text-xs mt-4">
-                جميع الحقوق محفوظة &copy; 2026
-            </p>
+            <p class="text-sea-400 text-sm">الهاتف: 0771 57 10 10 | N7A, Marsa Ben M'Hidi</p>
+            <p class="text-sea-500 text-xs mt-4">جميع الحقوق محفوظة &copy; 2026</p>
         </div>
     </footer>
+
+    <script src="supabase.js"></script>
 
     <script>
         // Set minimum date to today
@@ -409,65 +238,45 @@
         // Guest counter
         document.getElementById('decreaseGuests').addEventListener('click', () => {
             const input = document.getElementById('guests');
-            if (parseInt(input.value) > 1) {
-                input.value = parseInt(input.value) - 1;
-                updateSummary();
-            }
+            if (parseInt(input.value) > 1) { input.value = parseInt(input.value) - 1; updateSummary(); }
         });
 
         document.getElementById('increaseGuests').addEventListener('click', () => {
             const input = document.getElementById('guests');
             const roomType = document.getElementById('roomType').value;
             const maxGuests = roomType ? roomPrices[roomType].maxGuests : 10;
-            if (parseInt(input.value) < maxGuests) {
-                input.value = parseInt(input.value) + 1;
-                updateSummary();
-            }
+            if (parseInt(input.value) < maxGuests) { input.value = parseInt(input.value) + 1; updateSummary(); }
         });
 
-        // Update room type max guests when room changes
         document.getElementById('roomType').addEventListener('change', () => {
             const roomType = document.getElementById('roomType').value;
             const guestsInput = document.getElementById('guests');
             if (roomType && roomPrices[roomType]) {
                 const maxGuests = roomPrices[roomType].maxGuests;
-                if (parseInt(guestsInput.value) > maxGuests) {
-                    guestsInput.value = maxGuests;
-                }
+                if (parseInt(guestsInput.value) > maxGuests) { guestsInput.value = maxGuests; }
             }
             updateSummary();
         });
 
-        // Calculate nights
         function calculateNights(checkIn, checkOut) {
             const start = new Date(checkIn);
             const end = new Date(checkOut);
-            const diffTime = Math.abs(end - start);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            return diffDays;
+            return Math.ceil(Math.abs(end - start) / (1000 * 60 * 60 * 24));
         }
 
-        // Format date for display
         function formatDate(dateString) {
             const date = new Date(dateString);
             return date.toLocaleDateString('ar-DZ', { day: 'numeric', month: 'short' });
         }
 
-        // Update summary
         function updateSummary() {
             const checkIn = document.getElementById('checkIn').value;
             const checkOut = document.getElementById('checkOut').value;
             const roomType = document.getElementById('roomType').value;
             const guests = document.getElementById('guests').value;
 
-            // Update room type
-            if (roomType && roomPrices[roomType]) {
-                document.getElementById('summaryRoomType').textContent = roomPrices[roomType].name;
-            } else {
-                document.getElementById('summaryRoomType').textContent = 'لم يتم الاختيار';
-            }
+            document.getElementById('summaryRoomType').textContent = roomType ? roomPrices[roomType].name : 'لم يتم الاختيار';
 
-            // Update dates
             if (checkIn && checkOut) {
                 document.getElementById('summaryDates').textContent = `${formatDate(checkIn)} إلى ${formatDate(checkOut)}`;
                 const nights = calculateNights(checkIn, checkOut);
@@ -479,10 +288,8 @@
                 document.getElementById('summaryNightsCount').textContent = '0 ×';
             }
 
-            // Update guests
             document.getElementById('summaryGuests').textContent = `${guests} أشخاص`;
 
-            // Calculate total
             let total = 0;
             if (roomType && roomPrices[roomType] && checkIn && checkOut) {
                 const nights = calculateNights(checkIn, checkOut);
@@ -491,19 +298,22 @@
             } else {
                 document.getElementById('summaryPricePerNight').textContent = '0 د.ج';
             }
-
             document.getElementById('summaryTotal').textContent = `${total.toLocaleString()} د.ج`;
         }
 
-        // Add event listeners for real-time updates
         ['checkIn', 'checkOut', 'roomType', 'guests'].forEach(id => {
             document.getElementById(id).addEventListener('change', updateSummary);
             document.getElementById(id).addEventListener('input', updateSummary);
         });
 
-        // Form submission
+        // إرسال الحجز لـ Supabase
         document.getElementById('bookingForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+            
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin ml-2"></i> جاري تأكيد الحجز...';
+            submitBtn.disabled = true;
 
             const formData = {
                 checkIn: document.getElementById('checkIn').value,
@@ -517,54 +327,62 @@
                 terms: document.getElementById('terms').checked
             };
 
-            // Validate dates
             if (formData.checkIn >= formData.checkOut) {
                 alert('تاريخ المغادرة يجب أن يكون بعد تاريخ الوصول!');
+                submitBtn.innerHTML = originalBtnText; submitBtn.disabled = false;
                 return;
             }
 
-            // Validate terms
-            if (!formData.terms) {
-                alert('يجب الموافقة على الشروط والأحكام!');
-                return;
-            }
-
-            console.log('Booking submission:', formData);
-
-            // TODO: Connect to Supabase
-            // const { data, error } = await supabase
-            //     .from('bookings')
-            //     .insert([{
-            //         check_in: formData.checkIn,
-            //         check_out: formData.checkOut,
-            //         room_type: formData.roomType,
-            //         guests: formData.guests,
-            //         full_name: formData.fullName,
-            //         phone: formData.phone,
-            //         email: formData.email,
-            //         notes: formData.notes
-            //     }]);
-
-            // Show success message
             const nights = calculateNights(formData.checkIn, formData.checkOut);
             const totalPrice = roomPrices[formData.roomType].price * nights;
 
-            alert(`✅ تم استلام طلب الحجز بنجاح!\n\n` +
-                  `📅 من: ${formatDate(formData.checkIn)}\n` +
-                  `📅 إلى: ${formatDate(formData.checkOut)}\n` +
-                  `🏠 ${roomPrices[formData.roomType].name}\n` +
-                  `👥 ${formData.guests} أفراد\n` +
-                  `💰 المجموع: ${totalPrice.toLocaleString()} د.ج\n\n` +
-                  `سيتم التواصل معك قريباً للتأكيد.`);
+            if(window.supabaseClient) {
+                const { data, error } = await window.supabaseClient
+                    .from('bookings')
+                    .insert([{
+                        full_name: formData.fullName,
+                        phone: formData.phone,
+                        email: formData.email,
+                        check_in: formData.checkIn,
+                        check_out: formData.checkOut,
+                        room_type: formData.roomType,
+                        guests: parseInt(formData.guests),
+                        total_price: totalPrice,
+                        notes: formData.notes
+                    }]);
+
+                if (error) {
+                    console.error(error);
+                    alert('حدث خطأ أثناء الحجز: ' + error.message);
+                    submitBtn.innerHTML = originalBtnText; submitBtn.disabled = false;
+                } else {
+                    alert(`✅ تم استلام طلب الحجز بنجاح!\n\n📅 من: ${formatDate(formData.checkIn)}\n📅 إلى: ${formatDate(formData.checkOut)}\n💰 المجموع: ${totalPrice.toLocaleString()} د.ج\n\nسيتم التواصل معك قريباً للتأكيد.`);
+                    document.getElementById('bookingForm').reset();
+                    updateSummary();
+                    submitBtn.innerHTML = originalBtnText; submitBtn.disabled = false;
+                }
+            } else {
+                 alert("خطأ في الاتصال بقاعدة البيانات. تأكد من إعدادات Supabase.");
+                 submitBtn.innerHTML = originalBtnText; submitBtn.disabled = false;
+            }
         });
 
-        // Phone formatting
         document.getElementById('phone').addEventListener('input', (e) => {
             e.target.value = e.target.value.replace(/\D/g, '').replace(/(\d{4})(\d{2})(\d{2})(\d{2})/, '$1 $2 $3 $4');
         });
 
-        // Initialize summary
+        // تهيئة التلخيص عند التحميل
         updateSummary();
+        
+        // التحقق من وجود رابط محدد للشقة مسبقاً (مثل القادم من الصفحة الرئيسية)
+        window.onload = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const roomParam = urlParams.get('room');
+            if (roomParam && roomPrices[roomParam]) {
+                document.getElementById('roomType').value = roomParam;
+                updateSummary();
+            }
+        };
     </script>
 </body>
 </html>

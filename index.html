@@ -39,7 +39,6 @@
         .card-hover { transition: all 0.3s ease; }
         .card-hover:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); }
         .smooth-scroll { scroll-behavior: smooth; }
-        /* Language Dropdown Fix */
         .lang-dropdown { display: none; }
         .lang-group:hover .lang-dropdown { display: block; }
     </style>
@@ -115,7 +114,7 @@
                     </a>
                 </div>
 
-                <a href="booking.html" class="block mt-4 bg-gradient-to-r from-sea-500 to-sea-600 text-white px-6 py-3 rounded-full font-medium text-center flex items-center justify-center">
+                <a href="booking.html" class="block mt-4 bg-gradient-to-r from-sea-500 to-sea-600 text-white px-6 py-3 rounded-full font-medium text-center">
                     <i class="fas fa-calendar-check me-2"></i><span data-i18n="nav_book">احجز الآن</span>
                 </a>
             </div>
@@ -249,7 +248,7 @@
                 </div>
 
                 <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-xl text-start relative">
-                    <div class="absolute top-0 start-0 bg-gradient-to-r from-coral-500 to-coral-600 text-white px-6 py-2 rounded-br-2xl rounded-bl-none rtl:rounded-bl-2xl rtl:rounded-br-none font-bold text-sm z-10">
+                    <div class="absolute top-0 start-0 bg-gradient-to-r from-coral-500 to-coral-600 text-white px-6 py-2 rounded-br-2xl font-bold text-sm z-10">
                         <i class="fas fa-fire me-1"></i><span data-i18n="room_2_badge">الأكثر طلباً</span>
                     </div>
                     <div class="relative h-56 overflow-hidden">
@@ -423,9 +422,7 @@
     </footer>
 
     <script src="translations.js"></script>
-
     <script>
-        // Mobile Menu Toggle
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
         mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
@@ -433,7 +430,6 @@
             link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
         });
 
-        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 if (this.getAttribute('href').startsWith('#')) {
